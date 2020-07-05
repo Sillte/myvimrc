@@ -42,13 +42,18 @@ nnoremap ]w <C-W><C-P>
 noremap <F2> :execute ":edit " . g:myvim_folder <CR>
 
 " PC(site) specific settings.
-execute "source " g:myvim_folder . "/site.vim"
+if filereadable(g:myvim_folder . "/site.vim")
+    execute "source " g:myvim_folder . "/site.vim"
+endif
 
 " dein settings.
 execute "source " g:myvim_folder . "/dein.vim"
 
+
 " Experimental settings.
-execute "source " g:myvim_folder . "/scratch.vim"
+if filereadable(g:myvim_folder . "/scratch.vim")
+    execute "source " g:myvim_folder . "/scratch.vim"
+endif
 
 " Files related to undo, backups and swap files.
 let &undodir = g:myvim_folder . "/backups/undo"
