@@ -1,0 +1,8 @@
+colorscheme hybrid
+set langmenu=ja_jp.utf-8
+"colorscheme darkblue
+set background=dark
+set visualbell t_vb=
+set noerrorbells
+"set guifont=MS_Gothic:h13:cSHIFTJIS
+autocmd GUIEnter * set visualbell t_vb=
