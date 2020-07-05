@@ -74,7 +74,7 @@ for s:path in split(glob(s:plugins_folder . '/*'), '\n')
   endif
 endfor
 
-let s:myplugins_vim = s:plugins_folder . '/_plugins/_plugins.vim'
+let s:myplugins_vim = s:plugins_folder . '/_plugins.vim'
 if filereadable(s:myplugins_vim)
     execute 'source '  s:myplugins_vim
 endif
