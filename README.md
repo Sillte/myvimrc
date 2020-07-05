@@ -2,7 +2,7 @@
 
 ## Summary
 
-Personal `_vimrc` management repository.  
+Repository for personal `_vimrc` repository.    
 
 ### Requirements
 
@@ -24,6 +24,14 @@ As for the over-written files, refer to [.utils.py](./utils.py)
 ```bat
 python install.py
 ```
+In some cases, you have to specify the version of python.
+Please specify it in `.vim/site.vim`.
+
+For example in n my home's environment for using python3.8,  
+
+```
+set pythonthreedll=python38.dll
+```
 
 ### Fetch
 
@@ -32,4 +40,3 @@ Fetch the target files into this folder.
 ```bat
 python fetch.py
 ```
-
