@@ -14,6 +14,7 @@ Repository for personal `_vimrc` repository.
 ### Target files and folders. 
 * `$HOME/.vim` 
 * `$HOME/_vimrc` 
+* `$HOME/_gvimrc`
 
 As for the over-written files, refer to [.utils.py](./utils.py)   
 
