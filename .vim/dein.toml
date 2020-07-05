@@ -1,0 +1,35 @@
+[[plugins]]
+repo = "davidhalter/jedi-vim"
+hook_add = """
+let g:jedi#rename_command = "<Leader>R"
+let g:jedi#auto_initializtion = 0
+let g:jedi#popup_on_dot = 0
+let g:jedi#popup_select_first = 0
+"""
+
+[[plugins]]
+repo = "w0ng/vim-hybrid"
+
+[[plugins]]
+repo = "itchyny/lightline.vim"
+
+[[plugins]]
+repo = "dhruvasagar/vim-table-mode"
+
+[[plugins]]
+repo = "psf/black"
+
+[[plugins]]
+repo = "sillte/vim-pytoy"
+hook_add = """
+call pytoy#init_python()
+"""
+
+[[plugins]]
+repo = "jupyter-vim/jupyter-vim"
+hook_add = """
+"jupyter-vim
+let g:jupyter_mapkeys = 0
+let g:jupyter_monitor_console = 1
+"""
+
