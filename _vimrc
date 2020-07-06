@@ -40,11 +40,13 @@ nnoremap [w <C-W><C-W>
 nnoremap ]w <C-W><C-P>
 
 noremap <F2> :execute ":edit " . g:myvim_folder <CR>
+noremap <F3> :execute ":edit " . $MYVIMRC <CR>
 
 " PC(site) specific settings.
 if filereadable(g:myvim_folder . "/site.vim")
     execute "source " g:myvim_folder . "/site.vim"
 endif
+
 
 " dein settings.
 execute "source " g:myvim_folder . "/dein.vim"
@@ -57,11 +59,18 @@ endif
 
 " Files related to undo, backups and swap files.
 let &undodir = g:myvim_folder . "/backups/undo"
+if !isdirectory(&undodir)
+    call mkdir(&undodir, "p") 
+endif
 let &backupdir = g:myvim_folder . "/backups/backup"
+if !isdirectory(&backupdir)
+    call mkdir(&backupdir, "p") 
+endif
 let &directory = g:myvim_folder . "/backups/swap"
-call mkdir(&undodir,"p") 
-call mkdir(&backupdir,"p") 
-call mkdir(&directory,"p") 
+if !isdirectory(&directory)
+    call mkdir(&directory,"p") 
+endif
+
 
 " Add all the directory under `_plugins` to 
 " Notice of the priorities.
