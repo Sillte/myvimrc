@@ -20,6 +20,9 @@ repo = "dhruvasagar/vim-table-mode"
 repo = "psf/black"
 
 [[plugins]]
+repo = "tpope/vim-fugitive"
+
+[[plugins]]
 repo = "sillte/vim-pytoy"
 hook_add = """
 call pytoy#init_python()
