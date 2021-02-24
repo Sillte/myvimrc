@@ -4,6 +4,6 @@ set langmenu=ja_jp.utf-8
 set background=dark
 set visualbell t_vb=
 set noerrorbells
-"set guifont=MS_Gothic:h14:cSHIFTJIS
+set guifont=BIZ_UDゴシック:h14:cSHIFTJIS:qDRAFT
 autocmd GUIEnter * set visualbell t_vb=
 

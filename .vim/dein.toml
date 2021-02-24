@@ -16,6 +16,7 @@ repo = "tpope/vim-fugitive"
 # original.  
 # repo = "jpalardy/vim-slime"
 # You must not set `let g:slime_python_ipython = 0`.
+
 repo = "sillte/vim-slime"
 hook_add = """
 let g:slime_vimterminal_cmd = "ipython"
