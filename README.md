@@ -1,43 +1,37 @@
-# vimrc repository
+## Requirement
 
-## Summary
+* git (For installment of `dein`)
+* python3.6+ 
 
-Repository for personal `_vimrc` repository.    
+### Quick Tips for installment.
+This `vimrc` assumes to use `python`. 
+Hence,  In `site.vim`
 
-### Requirements
-
-* `git`   
-* `python` command activate `python3.6+ `
-* `vim8.0+` (?)   
-
-
-### Target files and folders. 
-* `$HOME/.vim` 
-* `$HOME/_vimrc` 
-* `$HOME/_gvimrc`
-
-As for the over-written files, refer to [.utils.py](./utils.py)   
-
-
-### Install
-
-[DANGER] the following command rewrite the `vim` configuration file.
-```bat
-python install.py
-```
-In some cases, you have to specify the version of python.
-Please specify it in `.vim/site.vim`.
-
-For example in n my home's environment for using python3.8,  
-
+For example, if you use python 3.8, add `site.vim` as follows.   
 ```
 set pythonthreedll=python38.dll
 ```
 
-### Fetch
+## global variable, functions, and mappings
 
-Fetch the target files into this folder. 
+* `g:myvim_folder`: Refer to the fullpath of `.vim` folder.
+ 
+## Description of folder and files
 
-```bat
-python fetch.py
-```
+#### `dein.vim` / `dein` / `dein.toml`
+Configuration for [dein](https://github.com/Shougo/dein.vim).  
+It's related to plugin management.
+
+### `site.vim`
+Use to write settings specific to each computers. 
+For example, `pythonthreedll` may be different over each computer,  
+and it is important to call `py3`.
+
+#### `_plugins` 
+
+Plugins under development for personal usage.    
+`runtimepath` for those plugins has the highest priority.   
+`_plugins/_plugins.vim` is expected to be called at the end of `_vimrc.`
+
+
+

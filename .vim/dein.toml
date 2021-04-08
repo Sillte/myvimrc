@@ -22,7 +22,7 @@ hook_add = """
 let g:slime_vimterminal_cmd = "ipython"
 let g:slime_target = "vimterminal"
 xmap <leader>f <Plug>SlimeRegionSend
-nmap <leader>f <Plug>SlimeParagraphSend
+nmap <leader>f <Plug>SlimeLineSend
 """
 
 [[plugins]]
