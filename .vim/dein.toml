@@ -15,9 +15,9 @@ repo = "tpope/vim-fugitive"
 [[plugins]]
 # original.  
 # repo = "jpalardy/vim-slime"
-
 repo = "sillte/vim-slime"
 hook_add = """
+let g:slime_no_mappings = 1
 let g:slime_python_ipython = 1
 let g:slime_vimterminal_cmd = "ipython"
 let g:slime_target = "vimterminal"
