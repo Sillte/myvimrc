@@ -37,6 +37,8 @@ nnoremap [b :bnext<CR>
 nnoremap ]b :bprevious<CR>
 nnoremap [t :tabnext<CR>
 nnoremap ]t :tabprevious<CR>
+nnoremap [l :lnext<CR>
+nnoremap ]l :lprevious<CR>
 nnoremap [w <C-W><C-W>
 nnoremap ]w <C-W><C-P>
 
