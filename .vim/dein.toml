@@ -33,4 +33,5 @@ repo = "psf/black"
 repo = "sillte/vim-pytoy"
 hook_add = """
 call pytoy#init_python()
+command -nargs=0 Qsort python3 import pytoy; pytoy.quickfix_timesort()
 """
