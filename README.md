@@ -11,6 +11,11 @@ For example, if you use python 3.8, add `site.vim` as follows.
 ```
 set pythonthreedll=python38.dll
 ```
+In addition, you require installment of `jedi` for the intended python environment. 
+You must execute the following command.
+```
+pip install jedi
+```
 
 ## global variable, functions, and mappings
 
