@@ -18,21 +18,23 @@ let &runtimepath = s:dein_repo_dir .",". &runtimepath
 
 " When expected files are not existent, file is output.
 if !isdirectory(s:dein_repo_dir)
-  call system('git clone https://github.com/Shougo/dein.vim ' . shellescape(s:dein_repo_dir))
+  "call system('git clone https://github.com/Shougo/dein.vim ' . shellescape(s:dein_repo_dir))
+  call system('git clone https://github.com/Shougo/dein.vim ' . '"' . s:dein_repo_dir . '"')
 endif
 if !filereadable(s:dein_toml)
   call writefile(["# (Eagerly loaded)"], s:dein_toml)
 endif  
-if !filereadable(s:dein_lazy_toml)
-  call writefile(["# (Lazily loaded)"], s:dein_lazy_toml)
-endif  
 if !filereadable(s:dein_site_toml)
   call writefile(["# (Eagerly loaded (For site-specific.))"], s:dein_site_toml)
+endif  
+if !filereadable(s:dein_lazy_toml)
+  call writefile(["# (Lazily loaded)"], s:dein_lazy_toml)
 endif  
 
 if dein#load_state(s:dein_dir)
   call dein#begin(s:dein_dir)
   call dein#load_toml(s:dein_toml)
+  call dein#load_toml(s:dein_site_toml)
   call dein#load_toml(s:dein_lazy_toml, {"lazy": 1})
   call dein#end()
   call dein#save_state()
