@@ -17,6 +17,9 @@ You must execute the following command.
 pip install jedi
 ```
 
+At first, it requires long time for installment of plugins. 
+
+
 ## global variable, functions, and mappings
 
 * `g:myvim_folder`: Refer to the fullpath of `.vim` folder.
