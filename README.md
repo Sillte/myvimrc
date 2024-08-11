@@ -15,6 +15,7 @@ In addition, you require installment of `jedi` for the intended python environme
 You must execute the following command.
 ```
 pip install jedi
+pip install ipython
 ```
 
 At first, it requires long time for installment of plugins. 
