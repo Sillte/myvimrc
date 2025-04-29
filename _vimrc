@@ -2,7 +2,8 @@
 " ------------
 " All of the settings and backups are placed under the following folder.
 " * `{Folder under which _vimrc exists}` / `.vim` 
-" [IMPORTANT] When you transport the environment, `.vim` should  also be copyied.
+" [IMPORTANT] When you transport the environment, `.vim` should  also be
+" copied.
 "
 let g:myvim_folder = expand('<sfile>:p:h') . "/.vim"  
 
@@ -45,20 +46,6 @@ nnoremap ]w <C-W><C-P>
 noremap <F2> :execute ":edit " . g:myvim_folder <CR>
 noremap <F3> :execute ":edit " . $MYVIMRC <CR>
 
-" PC(site) specific settings.
-if filereadable(g:myvim_folder . "/site.vim")
-    execute "source " g:myvim_folder . "/site.vim"
-endif
-
-
-" dein settings.
-execute "source " g:myvim_folder . "/dein.vim"
-
-
-" Experimental settings.
-if filereadable(g:myvim_folder . "/scratch.vim")
-    execute "source " g:myvim_folder . "/scratch.vim"
-endif
 
 " Files related to undo, backups and swap files.
 let &undodir = g:myvim_folder . "/backups/undo"
@@ -79,6 +66,13 @@ endif
 " Notice of the priorities.
 " In addition to that, `_plugins.vim` is read here, if exists.
 "
+"
+" PC(site) specific settings.
+"
+if filereadable(g:myvim_folder . "/site.vim")
+    execute "source " g:myvim_folder . "/site.vim"
+endif
+
 let s:plugins_folder = g:myvim_folder . "/_plugins"
 for s:path in split(glob(s:plugins_folder . '/*'), '\n')
   if s:path !~# '\~$' && isdirectory(s:path)
@@ -90,3 +84,14 @@ let s:myplugins_vim = s:plugins_folder . '/_plugins.vim'
 if filereadable(s:myplugins_vim)
     execute 'source '  s:myplugins_vim
 endif
+
+" Experimental settings.
+if filereadable(g:myvim_folder . "/scratch.vim")
+    execute "source " g:myvim_folder . "/scratch.vim"
+endif
+
+" dein settings.
+execute "source " g:myvim_folder . "/dein.vim"
+
+
+
