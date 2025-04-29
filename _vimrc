@@ -10,6 +10,7 @@ let g:myvim_folder = expand('<sfile>:p:h') . "/.vim"
 filetype plugin indent on
 syntax on
 
+set laststatus=2
 set shellslash
 set autochdir
 set helplang=en,jp
