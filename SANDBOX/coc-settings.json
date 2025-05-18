@@ -1,0 +1,17 @@
+{
+  "python.pythonPath": "python3",
+  "python.analysis.autoSearchPaths": true,
+  "python.analysis.useLibraryCodeForTypes": true,
+  "python.analysis.typeCheckingMode": "basic",
+  "python.analysis.diagnosticMode": "workspace",
+  "pyright.trace.server": "verbose", 
+  "signature.target": "echo", 
+  "signature.enable": true, 
+  "suggest.noselect": true,
+  "suggest.autoTrigger": "none",
+  "suggest.enablePreselect": true,
+  "inlayHint.enable": false,
+  "extensions.updateCheck": "daily",
+  "workspace.rootPatterns": [".git", "pyproject.toml", "setup.py", "venv"] 
+}
+

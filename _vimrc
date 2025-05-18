@@ -5,10 +5,59 @@
 " [IMPORTANT] When you transport the environment, `.vim` should  also be
 " copied.
 "
+set noswapfile
+set number
+set signcolumn=yes
+
+set updatetime=300
 let g:myvim_folder = expand('<sfile>:p:h') . "/.vim"  
 
-filetype plugin indent on
-syntax on
+" Languate Server Protocol setting.
+language en_US.UTF-8
+nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+
+nnoremap <silent>K :call CocActionAsync("doHover")<CR>
+
+nnoremap <silent>gd :call CocAction("jumpDefinition")<CR>
+nnoremap <silent>gD :call CocAction("jumpDeclaration")<CR>
+nnoremap <silent>gi :call CocAction("jumpImplementation")<CR>
+nnoremap <silent>gy :call CocAction("jumpTypeDefinition")<CR>
+nnoremap <silent>gr :call CocAction("jumpReferences")<CR>
+
+nnoremap <silent>]g :call CocAction('diagnosticPrevious')<CR>
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+
+inoremap <silent><expr> <c-x><c-j> coc#refresh()
+inoremap <silent><expr> <c-j> coc#refresh()
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
+
+" Applying code actions to the selected code block
+" Example: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap keys for applying code actions at the cursor position
+nmap <leader>ac  <Plug>(coc-codeaction-cursor)
+" Remap keys for apply code actions affect whole buffer
+nmap <leader>as  <Plug>(coc-codeaction-source)
+" Apply the most preferred quickfix action to fix diagnostic on the current line
+nmap <leader>qf  <Plug>(coc-fix-current)
+
 
 set laststatus=2
 set shellslash
@@ -40,12 +89,12 @@ nnoremap ]b :bprevious<CR>
 nnoremap [t :tabnext<CR>
 nnoremap ]t :tabprevious<CR>
 nnoremap [l :lnext<CR>
-nnoremap ]l :lprevious<CR>
+nnoremap ol :lprevious<CR>
 nnoremap [w <C-W><C-W>
 nnoremap ]w <C-W><C-P>
 
-noremap <F2> :execute ":edit " . g:myvim_folder <CR>
-noremap <F3> :execute ":edit " . $MYVIMRC <CR>
+noremap <F2> :execute ":edit " . $MYVIMRC <CR>
+noremap <F3> :execute ":edit " . g:myvim_folder <CR>
 
 
 " Files related to undo, backups and swap files.
@@ -93,6 +142,9 @@ endif
 
 " dein settings.
 execute "source " g:myvim_folder . "/dein.vim"
+
+syntax enable
+filetype plugin indent on
 
 
 

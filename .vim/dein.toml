@@ -1,6 +1,12 @@
 # For settings, refer to `https://qiita.com/delphinus/items/cd221a450fd23506e81a`   
 
 [[plugins]]
+repo = 'neoclide/coc.nvim'
+merged = 0
+rev = 'release'
+
+
+[[plugins]]
 repo = "w0ng/vim-hybrid"
 
 [[plugins]]
@@ -15,11 +21,14 @@ repo = "tpope/vim-fugitive"
 [[plugins]]
 repo = "cespare/vim-toml"
 
-# Python's related libraries.  
+[[plugins]]
+repo = "psf/black"
+
 [[plugins]]
 repo = "davidhalter/jedi-vim"
 hook_add = """
 let g:jedi#rename_command = "<Leader>R"
+let g:jedi#documentation_command = "<Leader>K"
 let g:jedi#auto_initializtion = 0
 let g:jedi#completion_enabled = 0
 let g:jedi#popup_on_dot = 0
@@ -27,11 +36,8 @@ let g:jedi#popup_select_first = 0
 """
 
 [[plugins]]
-repo = "psf/black"
-
-[[plugins]]
 repo = "sillte/vim-pytoy"
 hook_add = """
 call pytoy#init_python()
-command -nargs=0 Qsort python3 import pytoy; pytoy.quickfix_timesort()
+command! -nargs=0 Qsort python3 import pytoy; pytoy.quickfix_timesort()
 """
