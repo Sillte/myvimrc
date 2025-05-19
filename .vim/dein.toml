@@ -28,11 +28,12 @@ repo = "psf/black"
 repo = "davidhalter/jedi-vim"
 hook_add = """
 let g:jedi#rename_command = "<Leader>R"
-let g:jedi#documentation_command = "<Leader>K"
-let g:jedi#auto_initializtion = 0
-let g:jedi#completion_enabled = 0
+let g:jedi#auto_initializtion = 1
+let g:jedi#completion_enabled = 1
 let g:jedi#popup_on_dot = 0
 let g:jedi#popup_select_first = 0
+let g:jedi#show_call_signatures=0
+let g:jedi#documentation_command="<Leader><SPACE>K"
 """
 
 [[plugins]]

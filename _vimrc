@@ -5,11 +5,12 @@
 " [IMPORTANT] When you transport the environment, `.vim` should  also be
 " copied.
 "
+"
 set noswapfile
 set number
 set signcolumn=yes
 
-set updatetime=300
+set updatetime=2000
 let g:myvim_folder = expand('<sfile>:p:h') . "/.vim"  
 
 " Languate Server Protocol setting.
@@ -21,7 +22,9 @@ inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float
 vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
 vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 
-nnoremap <silent>K :call CocActionAsync("doHover")<CR>
+nnoremap <silent><nowait>K :call CocActionAsync("doHover")<CR>
+nnoremap <C-k> :call CocActionAsync("showSignatureHelp")<CR>
+inoremap <silent><C-k>  <C-r>=CocActionAsync('showSignatureHelp')<CR>
 
 nnoremap <silent>gd :call CocAction("jumpDefinition")<CR>
 nnoremap <silent>gD :call CocAction("jumpDeclaration")<CR>
@@ -29,9 +32,10 @@ nnoremap <silent>gi :call CocAction("jumpImplementation")<CR>
 nnoremap <silent>gy :call CocAction("jumpTypeDefinition")<CR>
 nnoremap <silent>gr :call CocAction("jumpReferences")<CR>
 
-nnoremap <silent>]g :call CocAction('diagnosticPrevious')<CR>
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
+
+nnoremap <F11> :call CocAction("diagnosticToggle")<CR>
 
 inoremap <silent><expr> <c-x><c-j> coc#refresh()
 inoremap <silent><expr> <c-j> coc#refresh()
@@ -49,7 +53,6 @@ omap ac <Plug>(coc-classobj-a)
 " Applying code actions to the selected code block
 " Example: `<leader>aap` for current paragraph
 xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
 
 " Remap keys for applying code actions at the cursor position
 nmap <leader>ac  <Plug>(coc-codeaction-cursor)
@@ -57,6 +60,8 @@ nmap <leader>ac  <Plug>(coc-codeaction-cursor)
 nmap <leader>as  <Plug>(coc-codeaction-source)
 " Apply the most preferred quickfix action to fix diagnostic on the current line
 nmap <leader>qf  <Plug>(coc-fix-current)
+
+command! CocRoot execute "CocCommand workspace.workspaceFolders"
 
 
 set laststatus=2
@@ -145,6 +150,9 @@ execute "source " g:myvim_folder . "/dein.vim"
 
 syntax enable
 filetype plugin indent on
+
+
+let g:jedi#documentation_command="<Leader><SPACE>K"
 
 
 
