@@ -5,7 +5,7 @@
   "python.analysis.typeCheckingMode": "basic",
   "python.analysis.diagnosticMode": "workspace",
   "pyright.trace.server": "verbose", 
-  "signature.target": "echo", 
+  "signature.target": "float", 
   "signature.enable": true, 
   "suggest.noselect": true,
   "suggest.autoTrigger": "none",
