@@ -7,6 +7,7 @@ vim.api.nvim_create_autocmd("BufEnter", {
     local filename = vim.api.nvim_buf_get_name(0)
     if buftype == "" and filename ~= "" and vim.fn.isdirectory(vim.fn.fnamemodify(filename, ":p:h")) == 1 then
       vim.cmd("lcd " .. vim.fn.fnamemodify(filename, ":p:h"))
+      vim.cmd("cd " .. vim.fn.fnamemodify(filename, ":p:h"))
     end
   end
 })

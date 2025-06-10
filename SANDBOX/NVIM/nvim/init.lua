@@ -18,11 +18,25 @@ if vim.g.vscode and vim.fn.filereadable(restart_file) == 1 then
   local plugin_path = data.plugin_folder
   local restart_time = tonumber(data.time)
 
-  if os.time() - restart_time <= 3 then
+  if os.time() - restart_time <= 3 and plugin_path then
+
+    -- This is required for success of `loading plugin`. 
     vim.opt.rtp:prepend(plugin_path)
-    require("load_plugin").load_plugin_scripts(plugin_path)
-    vim.notify("Restarted via vscode-neovim. dev-version plugin loaded:" .. plugin_path, vim.log.levels.INFO)
-    vim.g.dev_plugin = plugin_path
+    local ok, err = pcall(function() require("load_plugin").load_plugin_scripts(plugin_path) end)
+    if ok then
+        vim.notify("🌟 Restarted. Dev-plugin:" .. plugin_path, vim.log.levels.INFO)
+        vim.g.dev_plugin = plugin_path
+    else
+        vim.notify("☔ Failed to read Dev-plugin:" .. tostring(err), vim.log.levels.ERROR)
+        local rtp = vim.opt.rtp:get()
+        for i, path in ipairs(rtp) do
+            if path == plugin_path then
+                table.remove(rtp, i)
+                break
+            end
+        end
+        vim.opt.rtp = rtp
+    end
   end
   os.remove(restart_file)
 end
@@ -41,6 +55,7 @@ end
 
 
 if vim.g.vscode then
+    require("vscode_config")
     require("vscode_lazy_setup")
 else
     --Plugin manager.
