@@ -1,3 +1,24 @@
+local function load_lua_files_from(dir)
+  local handle = vim.loop.fs_scandir(dir)
+  if not handle then return end
+
+  while true do
+    local name, type = vim.loop.fs_scandir_next(handle)
+    if not name then break end
+
+    if type == "file" and name:match("%.lua$") then
+      local path = dir .. "/" .. name
+      dofile(path)
+    end
+  end
+end
+
+
+local site_dir = vim.fn.stdpath("config") .. "/site"
+local pre_site_dir = site_dir .. "/pre"
+load_lua_files_from(pre_site_dir)
+
+
 require("config.options")
 require("config.keymaps")
 require("config.autocmds")
@@ -18,7 +39,7 @@ if vim.g.vscode and vim.fn.filereadable(restart_file) == 1 then
   local plugin_path = data.plugin_folder
   local restart_time = tonumber(data.time)
 
-  if os.time() - restart_time <= 3 and plugin_path then
+  if os.time() - restart_time <= 3 and type(plugin_path) == "string" then
 
     -- This is required for success of `loading plugin`. 
     vim.opt.rtp:prepend(plugin_path)
@@ -63,3 +84,6 @@ else
     require("mylsp") -- Language Sever.
 end
 
+
+local post_site_dir = site_dir .. "/post"
+load_lua_files_from(post_site_dir)
