@@ -188,5 +188,30 @@
     "key": "alt+up",
     "command": "-editor.action.moveLinesUpAction",
     "when": "editorTextFocus && !editorReadonly"
-  }
+  },
+{
+  "key": "alt+i",
+  "command": "inlineChat.start",
+  "when": "inlineChatHasEditsAgent && inlineChatPossible && !editorReadonly && !editorSimpleInput || inlineChatHasProvider && inlineChatPossible && !editorReadonly && !editorSimpleInput"
+},
+{
+  "key": "alt+y",
+  "command": "inlineChat.acceptChanges",
+  "when": "inlineChatVisible"
+}, 
+{
+  "key": "alt+c",
+  "command": "inlineChat.close",
+  "when": "inlineChatVisible"
+}, 
+{
+  "key": "alt+e",
+  "command": "inlineChat.close",
+  "when": "inlineChatVisible"
+}, 
+{
+  "key": "alt+enter",
+  "command": "inlineChat.acceptChanges",
+  "when": "inlineChatVisible"
+}
 ]
