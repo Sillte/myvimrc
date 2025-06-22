@@ -6,8 +6,9 @@ except ImportError:
 
 from pytoy.command import CommandManager
 
-@CommandManager.register(name="SampleMockCommand")
+@CommandManager.register(name="SampleNVimPlyginCommand", exist_ok=True)
 def func():
-    print("This is a sample.")
-
+    from pytoy import TERM_STDOUT
+    #print("This is a sample.")
+    vim.command('CMD git --help & echo "HELLO!" ')
 EOF

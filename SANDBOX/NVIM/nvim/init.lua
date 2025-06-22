@@ -22,6 +22,7 @@ load_lua_files_from(pre_site_dir)
 require("config.options")
 require("config.keymaps")
 require("config.autocmds")
+require("config.extras")
 
 -- I wonder why this is required for lazynvim.
 vim.g.mapleader = "\\"
@@ -84,6 +85,8 @@ else
     require("mylsp") -- Language Sever.
 end
 
+local script_path = debug.getinfo(1, "S").source:sub(2)
+vim.cmd("source " .. vim.fn.fnamemodify(script_path, ':h') .. '/_plugins.vim')
 
 local post_site_dir = site_dir .. "/post"
 load_lua_files_from(post_site_dir)
