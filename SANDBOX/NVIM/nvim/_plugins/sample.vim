@@ -4,7 +4,7 @@ try:
 except ImportError:
     pass
 
-from pytoy.command import CommandManager
+from pytoy.command_manager import CommandManager
 
 @CommandManager.register(name="SampleNVimPlyginCommand", exist_ok=True)
 def func():
