@@ -20,7 +20,7 @@ set -euo pipefail
 trap 'echo "[ERROR] at line $LINENO: $BASH_COMMAND"; exit 1' ERR
 
 # Configuration
-ENV_NAME="${1:-mynvim}"
+ENV_NAME="${1:-.local}"
 NVIM_HOME="$HOME/$ENV_NAME"
 NVIM_BIN="$NVIM_HOME/bin"
 NVIM_PATH="$NVIM_BIN/nvim"
@@ -32,8 +32,7 @@ if ! grep -q "$HOME/.local/bin" "$HOME/.bashrc"; then
   export PATH="$HOME/.local/bin:$PATH"
 fi
 
-# Install pip if not present
-
+# Install pip if not present. 
 
 
 # Install Python if not present
@@ -54,6 +53,7 @@ if ! command -v python >/dev/null && command -v python3 >/dev/null; then
   export PATH="$HOME/.local/bin:$PATH"
 fi
 
+# Install of pip.
 if ! command -v pip >/dev/null; then
     sudo apt-get update && sudo apt-get install -y python3-pip
 fi 
