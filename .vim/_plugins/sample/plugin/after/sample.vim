@@ -13,7 +13,7 @@ endif
 python3 << EOF
 
 
-from pytoy.command_manager import CommandManager
+from pytoy.command import CommandManager
 from pathlib import Path
 import vim
 
