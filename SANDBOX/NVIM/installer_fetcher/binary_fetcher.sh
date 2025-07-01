@@ -27,6 +27,7 @@ NVIM_PATH="$NVIM_BIN/nvim"
 VOLTA_HOME="$HOME/.volta"
 
 # Ensure `path` of `.local/bin`. 
+mkdir -p "$HOME/.local/bin"
 if ! grep -q "$HOME/.local/bin" "$HOME/.bashrc"; then
   echo "export PATH=\"$HOME/.local/bin:\$PATH\"" >> "$HOME/.bashrc"
   export PATH="$HOME/.local/bin:$PATH"
