@@ -1,36 +1,35 @@
-vscode = require("vscode")
+local vscode = require("vscode")
+local opts = { noremap = true, silent = true }
 
--- Window control
--- See https://github.com/vscode-neovim/vscode-neovim/blob/master/runtime/vscode/overrides/vscode-window-commands.vim
+-- Window control（これは Neovim のままでOK）
 vim.keymap.set("n", "<C-w><C-h>", "<C-w>h", {noremap=true})
 vim.keymap.set("n", "<C-w><C-l>", "<C-w>l", {noremap=true})
 vim.keymap.set("n", "<C-w><C-k>", "<C-w>k", {noremap=true})
 vim.keymap.set("n", "<C-w><C-j>", "<C-w>j", {noremap=true})
 
-
 -- Diagnostics
-vim.keymap.set("n", "[g", function() vscode.call("editor.action.marker.prev") end)
-vim.keymap.set("n", "]g", function() vscode.call("editor.action.marker.next") end)
+vim.keymap.set("n", "[g", function() vscode.action("editor.action.marker.prev") end, opts)
+vim.keymap.set("n", "]g", function() vscode.action("editor.action.marker.next") end, opts)
 
--- :QQ  is also command.
-vim.keymap.set("n", "[q",  "<cmd>Qprev<CR>")
-vim.keymap.set("n", "]q",  "<cmd>Qnext<CR>")
+-- Quickfix navigation
+vim.keymap.set("n", "[q", "<cmd>Qprev<CR>", opts)
+vim.keymap.set("n", "]q", "<cmd>Qnext<CR>", opts)
+vim.keymap.set("n", "[c", "<cmd>Qprev<CR>", opts)
+vim.keymap.set("n", "]c", "<cmd>Qnext<CR>", opts)
 
-vim.keymap.set("n", "[c",  "<cmd>Qprev<CR>")
-vim.keymap.set("n", "]c",  "<cmd>Qnext<CR>")
+-- Insert mode trigger (VSCode captures <C-n>, so this might not work)
+vim.keymap.set("i", "<C-n>", function() vscode.action("editor.action.triggerSuggest") end, opts)
+vim.keymap.set("i", "<C-x>", function() vscode.action("editor.action.triggerSuggest") end, opts)
 
+-- Quickfix from normal and visual modes
+vim.keymap.set({"n", "v"}, "<leader>X", function()
+  vscode.action("editor.action.quickFix")
+end, opts)
 
--- Why does this not work...?
-vim.keymap.set("i", "<C-n>", function() vscode.call("editor.action.triggerSuggest") end)
-vim.keymap.set("i", "<C-x>", function() vscode.call("editor.action.triggerSuggest") end)
-
--- Refactor functions and actions provided by LSP.
-vim.keymap.set("n", "<leader>rn", function()
-  vscode.call("editor.action.rename")
-end)
-
--- Actions with 
-vim.keymap.set({"n", "v"}, "<leader>x", function()
-  vscode.call("editor.action.quickFix")
-end)
-
+-- Go to definition
+vim.keymap.set("n", "gd", function() vscode.action("editor.action.revealDefinition") end, opts)
+vim.keymap.set("n", "gr", function() vscode.action("editor.action.referenceSearch.trigger") end, opts)
+vim.keymap.set("n", "gy", function() vscode.action("editor.action.goToTypeDefinition") end, opts)
+vim.keymap.set("n", "<leader>R", function() vscode.action("editor.action.rename") end, opts)
+vim.keymap.set("n", "<leader>A", function() vscode.action("editor.action.quickFix") end, opts)
+vim.keymap.set("n", "K", function() vscode.action("editor.action.showHover") end, opts)
