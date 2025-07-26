@@ -60,7 +60,7 @@ def get_relative_paths() -> List[Path]:
     """Return List of relative paths which are the target of copies. 
     """
 
-    ret = subprocess.run("git ls-files", universal_newlines=True, stdout=subprocess.PIPE, check=True)
+    ret = subprocess.run("git ls-files", universal_newlines=True, stdout=subprocess.PIPE, check=True, shell=True)
     lines = [line for line in ret.stdout.split("\n") if line]
     exclusions = [re.compile(elem) for elem in EXCLUDES] 
 

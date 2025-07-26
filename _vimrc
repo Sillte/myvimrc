@@ -14,7 +14,7 @@ set updatetime=2000
 let g:myvim_folder = expand('<sfile>:p:h') . "/.vim"  
 
 " Languate Server Protocol setting.
-language en_US.UTF-8
+"language en_US.UTF-8
 nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
 nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
@@ -153,6 +153,5 @@ filetype plugin indent on
 
 
 let g:jedi#documentation_command="<Leader><SPACE>K"
-
 
 
