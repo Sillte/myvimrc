@@ -147,8 +147,6 @@ if filereadable(g:myvim_folder . "/scratch.vim")
     execute "source " g:myvim_folder . "/scratch.vim"
 endif
 
-" dein settings.
-execute "source " g:myvim_folder . "/dein.vim"
 
 syntax enable
 filetype plugin indent on
@@ -162,20 +160,29 @@ function s:get_cache()
 endfunction
 
 function s:inject_pytoy_reboot_info()
+    if exists('g:pytoy_loaded')
+        return
+    endif
     let l:json_file = s:get_cache() . "/pytoy_reboot.json"
     if filereadable(l:json_file)
-      let content = readfile(l:json_file)
-      let data = json_decode(join(content, "\n"))
-      if has_key(data, 'plugin_folder')
-        execute 'let &runtimepath = "' . escape(data.plugin_folder, '"') . '," . &runtimepath'
+      let l:data = json_decode(join(readfile(l:json_file), "\n"))
+      if has_key(l:data, 'plugin_folder')
+        execute 'let &runtimepath = "' . escape(l:data.plugin_folder, '"') . '," . &runtimepath'
+        let l:plugin_dir = l:data.plugin_folder. '/plugin'
+        if isdirectory(l:plugin_dir)
+          for file in split(globpath(l:plugin_dir, '*.vim'), '\n')
+            execute 'source' fnameescape(file)
+          endfor
+        endif
       endif
     endif
 endfunction
 
 call s:inject_pytoy_reboot_info()
 
+" dein settings.
+execute "source " g:myvim_folder . "/dein.vim"
 
 let g:jedi#documentation_command="<Leader><SPACE>K"
-
 
 
