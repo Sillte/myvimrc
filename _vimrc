@@ -117,6 +117,8 @@ if !isdirectory(&directory)
 endif
 
 
+"echo &runtimepath
+
 " Add all the directory under `_plugins` to 
 " Notice of the priorities.
 " In addition to that, `_plugins.vim` is read here, if exists.
@@ -151,7 +153,29 @@ execute "source " g:myvim_folder . "/dein.vim"
 syntax enable
 filetype plugin indent on
 
+function s:get_cache()
+    if exists('$XDG_CACHE_HOME')
+      return $XDG_CACHE_HOME
+    else
+      return expand('~/.cache')
+    endif
+endfunction
+
+function s:inject_pytoy_reboot_info()
+    let l:json_file = s:get_cache() . "/pytoy_reboot.json"
+    if filereadable(l:json_file)
+      let content = readfile(l:json_file)
+      let data = json_decode(join(content, "\n"))
+      if has_key(data, 'plugin_folder')
+        execute 'let &runtimepath = "' . escape(data.plugin_folder, '"') . '," . &runtimepath'
+      endif
+    endif
+endfunction
+
+call s:inject_pytoy_reboot_info()
+
 
 let g:jedi#documentation_command="<Leader><SPACE>K"
+
 
 

@@ -2,6 +2,7 @@ python3 << EOF
 import vim
 try:
     import pytoy
+    from pytoy.command import CommandManager
     vim.vars["import_pytoy"] = 1 
 except ImportError as e:
     vim.vars["import_pytoy"] = 0
