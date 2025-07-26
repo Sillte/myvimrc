@@ -151,21 +151,17 @@ endif
 syntax enable
 filetype plugin indent on
 
-function s:get_cache()
-    if exists('$XDG_CACHE_HOME')
-      return $XDG_CACHE_HOME
-    else
-      return expand('~/.cache')
-    endif
-endfunction
 
-function s:inject_pytoy_reboot_info()
+function s:inject_pytoy_reboot_debug()
     if exists('g:pytoy_loaded')
         return
     endif
-    let l:json_file = s:get_cache() . "/pytoy_reboot.json"
+    let l:cache_folder = exists('$XDG_CACHE_HOME') ? $XDG_CACHE_HOME : expand('~/.cache')
+    let l:json_file = l:cache_folder . "/pytoy_reboot.json"
+    let l:session_file = l:cache_folder . "/pytoy_reboot.vim"
     if filereadable(l:json_file)
       let l:data = json_decode(join(readfile(l:json_file), "\n"))
+      call delete(l:json_file)
       if has_key(l:data, 'plugin_folder')
         execute 'let &runtimepath = "' . escape(l:data.plugin_folder, '"') . '," . &runtimepath'
         let l:plugin_dir = l:data.plugin_folder. '/plugin'
@@ -175,10 +171,11 @@ function s:inject_pytoy_reboot_info()
           endfor
         endif
       endif
+      execute 'source' fnameespace(l:session_file)
     endif
 endfunction
 
-call s:inject_pytoy_reboot_info()
+call s:inject_pytoy_reboot_debug()
 
 " dein settings.
 execute "source " g:myvim_folder . "/dein.vim"
