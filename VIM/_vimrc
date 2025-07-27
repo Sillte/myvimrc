@@ -156,7 +156,8 @@ function s:inject_pytoy_reboot_debug()
     if exists('g:pytoy_loaded')
         return
     endif
-    let l:cache_folder = exists('$XDG_CACHE_HOME') ? $XDG_CACHE_HOME : expand('~/.cache')
+    let l:home_cache_folder = exists('$XDG_CACHE_HOME') ? $XDG_CACHE_HOME : expand('~/.cache')
+    let l:cache_folder = l:home_cache_folder . "/vim"
     let l:json_file = l:cache_folder . "/pytoy_reboot.json"
     let l:session_file = l:cache_folder . "/pytoy_reboot.vim"
     if filereadable(l:json_file)
@@ -171,7 +172,7 @@ function s:inject_pytoy_reboot_debug()
           endfor
         endif
       endif
-      execute 'source' fnameespace(l:session_file)
+      execute 'silent! source' fnameescape(l:session_file)
     endif
 endfunction
 
@@ -181,5 +182,4 @@ call s:inject_pytoy_reboot_debug()
 execute "source " g:myvim_folder . "/dein.vim"
 
 let g:jedi#documentation_command="<Leader><SPACE>K"
-
 
