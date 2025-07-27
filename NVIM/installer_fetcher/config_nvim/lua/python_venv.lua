@@ -10,8 +10,12 @@ local function ensure_python_venv(venv_path)
     local project_dir = vim.fn.fnamemodify(venv_path, ":h") 
     local command = "cd " .. vim.fn.shellescape(project_dir)
                     .. " && uv venv " .. " --python " .. python_version
-                    .. venv_path
-    vim.fn.system(command)
+    local output = vim.fn.system(command)
+    if vim.v.shell_error == 0 then
+        print("Success of venv-creation.")
+    else
+        print("Failure of venv-creation." .. output)
+    end
   end
   return venv_path
 end
@@ -58,6 +62,8 @@ function M.get_python3_host_prog()
     end
     return venv_to_executable(target_venv_path)
 end
+
+M.get_python3_host_prog()
 
 return M
 
