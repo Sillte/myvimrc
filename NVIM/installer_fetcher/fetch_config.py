@@ -10,4 +10,4 @@ from utils_config import get_config_path, copyfiles_with_glob
 if __name__ == "__main__":
     config_path = get_config_path()
     print("config_path", config_path)
-    copyfiles_with_glob(config_path, _target_folder, exclude=["site/**/*.lua", ".git"])
+    copyfiles_with_glob(config_path, _target_folder, exclude=[".venv/**", "site/**/*.lua", ".git", "lazy-lock.json"])

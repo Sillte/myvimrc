@@ -17,6 +17,8 @@ local site_dir = vim.fn.stdpath("config") .. "/site"
 local pre_site_dir = site_dir .. "/pre"
 load_lua_files_from(pre_site_dir)
 
+vim.g.python3_host_prog = require("python_venv").get_python3_host_prog()
+
 
 require("config.options")
 require("config.keymaps")
