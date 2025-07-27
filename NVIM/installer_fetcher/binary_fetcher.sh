@@ -67,13 +67,6 @@ if ! command -v uv >/dev/null; then
 fi
 
 
-# Install Python dependencies
-if [ -f "requirements.txt" ]; then
-  echo "[INFO] Installing Python dependencies from requirements.txt..."
-  python -m pip install --break-system-packages -r requirements.txt
-fi
-
-
 # Install Volta if not present
 if ! command -v volta >/dev/null; then
   echo "[INFO] Installing Volta..."

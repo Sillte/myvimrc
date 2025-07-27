@@ -1,5 +1,0 @@
-pynvim
-jedi
-pydantic
-black
-requests
