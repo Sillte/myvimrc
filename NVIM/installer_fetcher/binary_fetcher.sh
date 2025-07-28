@@ -19,12 +19,12 @@ trap 'echo "[ERROR] at line $LINENO: $BASH_COMMAND"; exit 1' ERR
 # Configuration
 ENV_NAME="${1:-.local}"
 
-NVIM_VERSION="${NVIM_VERSION:-0.11.2}"
-NVIM_DEB_URL="https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-linux64.tar.gz"
+NVIM_VERSION="${NVIM_VERSION:-0.11.3}"
+NVIM_TAR="nvim-linux-x86_64.tar.gz"
+NVIM_DEB_URL="https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/${NVIM_TAR}"
 NVIM_HOME="$HOME/$ENV_NAME"
 NVIM_BIN="$NVIM_HOME/bin"
 NVIM_PATH="$NVIM_BIN/nvim"
-NVIM_TAR="nvim-linux64.tar.gz"
 FORCE_NVIM="${FORCE_NVIM:-1}"
 
 VOLTA_HOME="$HOME/.volta"
@@ -115,9 +115,7 @@ if [ "${FORCE_NVIM}" = "1" ] || ! command -v nvim >/dev/null; then
   echo "[INFO] Installing Neovim v${NVIM_VERSION} from tar.gz..."
   mkdir -p "$NVIM_HOME"
   curl -LO "$NVIM_DEB_URL"
-  tar xzf "$NVIM_TAR"
-  mv nvim-linux64/* "$NVIM_HOME/"
-  rm -rf nvim-linux64 nvim-linux64.tar.gz
+  tar xzf "$NVIM_TAR" --strip-components=1 -C "$NVIM_HOME"
 
   if ! grep -q "$NVIM_BIN" "$HOME/.bashrc"; then
     echo "export PATH=\"$NVIM_BIN:\$PATH\"" >> "$HOME/.bashrc"
