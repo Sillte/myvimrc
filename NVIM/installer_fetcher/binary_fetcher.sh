@@ -12,18 +12,21 @@
 
 # Neovim environment setup
 #
-NVIM_VERSION="${NVIM_VERSION:-0.11.2}"
-NVIM_APPIMAGE_URL="https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-linux-x86_64.appimage"
-FORCE_NVIM="${FORCE_NVIM:-1}"
 
 set -euo pipefail
 trap 'echo "[ERROR] at line $LINENO: $BASH_COMMAND"; exit 1' ERR
 
 # Configuration
 ENV_NAME="${1:-.local}"
+
+NVIM_VERSION="${NVIM_VERSION:-0.11.2}"
+NVIM_DEB_URL="https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-linux64.tar.gz"
 NVIM_HOME="$HOME/$ENV_NAME"
 NVIM_BIN="$NVIM_HOME/bin"
 NVIM_PATH="$NVIM_BIN/nvim"
+NVIM_TAR="nvim-linux64.tar.gz"
+FORCE_NVIM="${FORCE_NVIM:-1}"
+
 VOLTA_HOME="$HOME/.volta"
 
 # Ensure `path` of `.local/bin`. 
@@ -33,9 +36,6 @@ if ! grep -q "$HOME/.local/bin" "$HOME/.bashrc"; then
   export PATH="$HOME/.local/bin:$PATH"
 fi
 
-# Install pip if not present. 
-
-
 # Install Python if not present
 if ! command -v python3 >/dev/null && ! command -v python >/dev/null; then
   echo "[INFO] Python3 not found. Trying to install via apt..."
@@ -43,14 +43,14 @@ if ! command -v python3 >/dev/null && ! command -v python >/dev/null; then
 fi
 
 if ! command -v python3 >/dev/null && ! command -v python >/dev/null; then
-  echo "[ERROR] Python not found. Please install Python manually on Windows."
+  echo "[ERROR] Python not found. Please install Python manually"
   exit 1
 fi
 
 # [5.5] 0ptional: `python` for `python3`
 if ! command -v python >/dev/null && command -v python3 >/dev/null; then
   echo "[INFO] Creating alias 'python' -> 'python3'..."
-  ln -s "$(command -v python3)" "$HOME/.local/bin/python"
+  ln -sf "$(command -v python3)" "$HOME/.local/bin/python"
   export PATH="$HOME/.local/bin:$PATH"
 fi
 
@@ -112,15 +112,14 @@ done
 
 # Installment of Neovim, if necessary.
 if [ "${FORCE_NVIM}" = "1" ] || ! command -v nvim >/dev/null; then
-  printf "[INFO] Installing Neovim v%s\n" "$NVIM_VERSION"
-  mkdir -p "$NVIM_BIN"
-  curl -LO "$NVIM_APPIMAGE_URL"
-  chmod +x nvim-linux-x86_64.appimage
-  mv nvim-linux-x86_64.appimage "$NVIM_PATH"
-  
-  # PATH addition.
+  echo "[INFO] Installing Neovim v${NVIM_VERSION} from tar.gz..."
+  mkdir -p "$NVIM_HOME"
+  curl -LO "$NVIM_DEB_URL"
+  tar xzf "$NVIM_TAR"
+  mv nvim-linux64/* "$NVIM_HOME/"
+  rm -rf nvim-linux64 nvim-linux64.tar.gz
+
   if ! grep -q "$NVIM_BIN" "$HOME/.bashrc"; then
-    echo "[INFO] Adding Neovim to PATH..."
     echo "export PATH=\"$NVIM_BIN:\$PATH\"" >> "$HOME/.bashrc"
     export PATH="$NVIM_BIN:$PATH"
   fi
