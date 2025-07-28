@@ -9,4 +9,4 @@ from utils_config import get_config_path, copyfiles_with_glob
 
 if __name__ == "__main__":
     config_path = get_config_path()
-    copyfiles_with_glob(_target_folder, config_path, exclude=["site/**/*.lua", ".git"])
+    copyfiles_with_glob(_target_folder, config_path, exclude=["site/**/*.lua", ".git/**/*", ".venv/**/*"])

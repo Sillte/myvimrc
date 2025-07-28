@@ -10,7 +10,9 @@ end
 
 local uname = vim.loop.os_uname()
 if uname.sysname == "Windows_NT" then
-    M.start_ime_hook()
+    vim.defer_fn(function()
+      M.start_ime_hook()
+    end, 0)
 end
 
 return M
