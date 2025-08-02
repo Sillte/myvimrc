@@ -15,23 +15,26 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     config = function()
         require("mason-lspconfig").setup({
-          ensure_installed = { "pyright", "lua_ls" },
+          ensure_installed = { "pyright", "lua_ls", "ts_ls", "eslint"},
           automatic_enable = true,
         })
 
-        local capabilities = require("cmp_nvim_lsp").default_capabilities()
+        local lspconfig = require("lspconfig")
+        local mylsp_common = require("mylsp.common")
+        local on_attach = mylsp_common.on_attach
+        local capabilities = mylsp_common.capabilitijs
         local server_settings = {
           pyright = require("mylsp.pyright"),
           lua_ls = require("mylsp.lua_ls"),
+          ts_ls = require("mylsp.ts_ls"),
+          eslint = require("mylsp.eslint")
         }
 
-        vim.lsp.config('*', {
-          capabilities = capabilities,
-          on_attach = require("mylsp.common").on_attach,
-        })
-
         for server, cfg in pairs(server_settings) do
-          vim.lsp.config(server, cfg)
+          lspconfig[server].setup(vim.tbl_deep_extend("force", {
+            on_attach = on_attach,
+            capabilities = capabilities,
+          }, cfg))
         end
     end
   },
