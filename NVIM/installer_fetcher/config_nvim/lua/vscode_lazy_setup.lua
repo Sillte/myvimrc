@@ -1,3 +1,15 @@
+-- Make sure to setup `mapleader` and `maplocalleader` before
+-- loading lazy.nvim so that mappings are correct.
+-- This is also a good place to setup other settings (vim.opt)
+
+if vim.g.mapleader == nil then
+    vim.g.mapleader = "\\"
+end
+
+if vim.g.maplocalleader == nil then
+    vim.g.maplocalleader = "\\"
+end
+
 -- Setup lazy.nvim
 require("lazy").setup({
   spec = {

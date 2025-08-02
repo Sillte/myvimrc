@@ -57,6 +57,10 @@ end
 
 function M.get_python3_host_prog()
     if M.is_venv_existent() == false then
+        if M.is_uv_available() == false then
+            print("UV is not installed.")
+            return -1
+        end
         ensure_python_venv(target_venv_path)
         install_dependency(target_venv_path, target_requirement_path)
     end
@@ -66,7 +70,5 @@ end
 M.get_python3_host_prog()
 
 return M
-
-
 
 

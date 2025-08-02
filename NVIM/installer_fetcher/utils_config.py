@@ -26,6 +26,7 @@ def copyfiles_with_glob(src_base: Path | str, dst_base: Path | str, target: str 
     else:
         excluded_paths = []
     paths = list(set(paths) - set(excluded_paths))
+    print("excluded_paths", excluded_paths)
     for path in paths:
         if path.is_dir():
             continue
