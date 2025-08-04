@@ -1,3 +1,1 @@
-python3 << EOF
-
-EOF
+"Sample VIM
