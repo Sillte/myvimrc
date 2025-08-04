@@ -25,20 +25,7 @@ repo = "cespare/vim-toml"
 repo = "psf/black"
 
 [[plugins]]
-repo = "davidhalter/jedi-vim"
-hook_add = """
-let g:jedi#rename_command = "<Leader>R"
-let g:jedi#auto_initializtion = 1
-let g:jedi#completion_enabled = 1
-let g:jedi#popup_on_dot = 0
-let g:jedi#popup_select_first = 0
-let g:jedi#show_call_signatures=0
-let g:jedi#documentation_command="<Leader><SPACE>K"
-"""
-
-[[plugins]]
 repo = "sillte/vim-pytoy"
 hook_add = """
-"call pytoy#init_python()
 command! -nargs=0 Qsort python3 import pytoy; pytoy.quickfix_timesort()
 """
