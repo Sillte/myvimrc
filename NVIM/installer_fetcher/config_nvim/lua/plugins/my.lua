@@ -1,8 +1,10 @@
 return {
   {
-    "sillte/vim-pytoy", 
+    "sillte/vim-pytoy",
+    lazy = false,
   },
   {
-    "itchyny/lightline.vim"
+    "itchyny/lightline.vim",
+    lazy = false,
   }
 }
