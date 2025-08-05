@@ -171,7 +171,6 @@ function s:inject_pytoy_reboot_debug()
             execute 'source' fnameescape(file)
           endfor
         endif
-        execute 'py3 import pytoy'
       endif
       execute 'silent! source' fnameescape(l:session_file)
     endif
