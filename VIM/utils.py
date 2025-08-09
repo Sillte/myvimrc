@@ -2,6 +2,7 @@ import os
 import subprocess 
 from typing import List
 from pathlib import Path
+import tempfile
 import re 
 import shutil
 
@@ -46,13 +47,21 @@ def copy(src, dst, non_exist_ok=True) -> None:
         shutil.copyfile(src, dst)
 
 
-def get_home_path() -> Path:
-    """Return `HOME` path.
-    """
-    env = os.environ
-    path = env.get("HOME", env.get("USERPROFILE"))
+def get_vimrc_parent_path() -> Path:
+    tmpfile = tempfile.NamedTemporaryFile(delete=False)
+    tmpfile.close()
+    subprocess.run([
+        "vim", "-es", "+redir! > " + tmpfile.name,
+        "+silent echo $MYVIMRC",
+        "+redir END", "+qa"
+    ], shell=True)
+    with open(tmpfile.name, encoding="utf-8") as f:
+        path = f.read().strip()
+    os.remove(tmpfile.name)
+    if not path:
+        path = os.environ.get("HOME", os.environ.get("USERPROFILE"))
     if path is None:
-        raise ValueError("HOME path's environment variable is not found.")
+        raise ValueError("`$MYVIMR` or HOME path's environment variable is not found.")
     return Path(path)
 
 
