@@ -16,6 +16,7 @@ require("pytoy_reboot")
 
 if vim.g.vscode then
     require("vscode_config")
+    require("vscode_config.path_solver")
     require("vscode_lazy_setup")
     if vim.g.pytoy_reboot ~= nil then
         vim.opt.rtp:prepend(vim.g.pytoy_reboot)
