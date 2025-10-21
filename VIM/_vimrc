@@ -6,6 +6,10 @@
 " copied.
 "
 "
+syntax enable
+filetype on
+
+
 set noswapfile
 set number
 set signcolumn=yes
@@ -94,7 +98,7 @@ nnoremap ]b :bprevious<CR>
 nnoremap [t :tabnext<CR>
 nnoremap ]t :tabprevious<CR>
 nnoremap [l :lnext<CR>
-nnoremap ol :lprevious<CR>
+nnoremap ]l :lprevious<CR>
 nnoremap [w <C-W><C-W>
 nnoremap ]w <C-W><C-P>
 
@@ -148,8 +152,6 @@ if filereadable(g:myvim_folder . "/scratch.vim")
 endif
 
 
-syntax enable
-filetype plugin indent on
 
 
 function s:inject_pytoy_reboot_debug()
@@ -183,3 +185,10 @@ execute "source " g:myvim_folder . "/dein.vim"
 
 let g:jedi#documentation_command="<Leader><SPACE>K"
 
+"I am not able to detect the reason yet,  
+"however, in 2025, Oct, `filetypes` is not loaded... 
+"Therefore, this is the counter-measure.
+if exists("did_load_filetypes") == 0
+  runtime! filetype.vim
+endif
+filetype plugin indent on

@@ -56,7 +56,7 @@ def get_vimrc_parent_path() -> Path:
         "+redir END", "+qa"
     ], shell=True)
     with open(tmpfile.name, encoding="utf-8") as f:
-        path = f.read().strip()
+        path = Path(f.read().strip()).parent
     os.remove(tmpfile.name)
     if not path:
         path = os.environ.get("HOME", os.environ.get("USERPROFILE"))
