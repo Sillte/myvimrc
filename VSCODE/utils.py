@@ -1,5 +1,6 @@
 import os
 import subprocess
+from subprocess import PIPE
 import re
 import shutil
 from pathlib import Path
@@ -34,7 +35,8 @@ def get_names() -> list[str]:
 
 
 def copy_with_backup(src_path: Path,  dst_path: Path):
-    shutil.copy(dst_path, dst_path.parent / f"{dst_path.name}.bak")
+    if dst_path.exists():
+        shutil.copy(dst_path, dst_path.parent / f"{dst_path.name}.bak")
     shutil.copy(src_path, dst_path)
 
 
