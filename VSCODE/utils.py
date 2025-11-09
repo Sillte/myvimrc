@@ -23,7 +23,7 @@ def get_vscode_user_dir() -> Path:
         raise OSError(f"Unsupported system: {system}")
 
 def get_repo_folder() -> Path:
-    system = platform.system()
+    system = platform.system().lower()
     if system == "windows":
         return _win_folder
     else:
