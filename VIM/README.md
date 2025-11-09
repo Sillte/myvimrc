@@ -1,15 +1,15 @@
 ## Requirement
 
 * git (For installment of `dein`)
-* python3.6+ 
+* python3.11+ 
 
 ### Quick Tips for installment.
 This `vimrc` assumes to use `python`. 
 Hence,  In `site.vim`
 
-For example, if you use python 3.8, add `site.vim` as follows.   
+For example, if you use python 3.11, add `site.vim` as follows.   
 ```
-set pythonthreedll=python38.dll
+set pythonthreedll=python311.dll
 ```
 In addition, you require installment of `jedi` for the intended python environment. 
 You must execute the following command.
@@ -41,6 +41,5 @@ and it is important to call `py3`.
 Plugins under development for personal usage.    
 `runtimepath` for those plugins has the highest priority.   
 `_plugins/_plugins.vim` is expected to be called at the end of `_vimrc.`
-
 
 

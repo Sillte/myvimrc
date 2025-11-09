@@ -7,13 +7,17 @@
 
 ## Fetch config files
 
-* 
 
 ```python 
-python fetch.py
+python fetch_config.py
 ```
 
-* 
+## Install config files
+
+```python 
+python fetch_config.py
+```
+
 
 
 

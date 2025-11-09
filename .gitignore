@@ -132,3 +132,5 @@ dmypy.json
 # Ignore. 
 .vim/backups
 .vim/dein
+
+.bak

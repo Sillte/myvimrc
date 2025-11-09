@@ -1,4 +1,6 @@
+// Place your key bindings in this file to override the defaults
 [
+  // Completion:
   {
     "key": "CTRL+N",
     "command": "editor.action.triggerSuggest",
@@ -8,6 +10,11 @@
     "key": "CTRL+X CTRL+N",
     "command": "editor.action.triggerSuggest",
     "when": "editorTextFocus && !suggestWidgetVisible && neovim.mode == 'insert'"
+  },
+  {
+    "key": "CTRL+X CTRL+J",
+    "command": "editor.action.triggerSuggest",
+    "when": "editorFocus && editorTextFocus && !suggestWidgetVisible && neovim.mode == 'insert'"
   },
   {
     "key": "CTRL+X CTRL+Z",
@@ -211,5 +218,49 @@
   "key": "alt+enter",
   "command": "inlineChat.acceptChanges",
   "when": "inlineChatVisible"
+},
+
+// 
+{
+  "key": "ctrl+shift+1",
+  "command": "workbench.action.focusFirstEditorGroup"
+},
+
+{
+  "key": "ctrl+shift+2",
+  "command": "workbench.action.terminal.focus",
+},
+
+//Terminal related
+{
+  "key": "ctrl+shift+w",
+  "command": "workbench.action.terminal.kill",
+  "when": "terminalFocus || terminalEditorFocus"
+}, 
+{
+  "key": "ctrl+w",
+  "command": "-workbench.action.terminal.killEditor",
+},
+
+{
+  "key": "ctrl+j",
+  "command": "-workbench.action.togglePanel"
+},
+{
+  "key": "ctrl+shift+k",
+  "command": "-editor.action.deleteLines",
+},
+{
+  "key": "ctrl+shift+k",
+  "command": "workbench.action.togglePanel",
+},
+{
+  "key": "ctrl+p",
+  "command": "-workbench.action.quickOpen",
+},
+{
+  "key": "ctrl+p",
+  "command": "workbench.action.quickOpen",
+  "when": "!(terminalFocus || terminalEditorFocus)"
 }
 ]
