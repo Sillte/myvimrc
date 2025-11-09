@@ -7,12 +7,13 @@ def install_settings() -> None:
     vscode_directory = get_vscode_user_dir()
     print("Installed to", vscode_directory)
     for name in get_names():
-        src_path = vscode_directory / name
+        src_path = get_repo_folder() / name
         if src_path:
-            dst_path = get_repo_folder() / name
+            dst_path = get_vscode_user_dir() / name
             copy_with_backup(src_path, dst_path)
         else:
             print("`src_path` does not exist", src_path)
+
     # If this is host, overriding path of `nvim` happens.
     if is_remote_environment():
         override_neovim_if_possible(vscode_directory / "settings.json")
