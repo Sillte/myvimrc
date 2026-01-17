@@ -182,6 +182,8 @@ call s:inject_pytoy_reboot_debug()
 
 " dein settings.
 execute "source " g:myvim_folder . "/dein.vim"
+"lsp settings.
+execute "source " g:myvim_folder . "/lsp.vim"
 
 let g:jedi#documentation_command="<Leader><SPACE>K"
 

@@ -1,9 +1,20 @@
 # For settings, refer to `https://qiita.com/delphinus/items/cd221a450fd23506e81a`   
 
+# LSP クライアント本体
 [[plugins]]
-repo = 'neoclide/coc.nvim'
-merged = 0
-rev = 'release'
+repo = 'prabirshrestha/vim-lsp'
+
+# LSP サーバーを自動インストール・設定してくれる神プラグイン
+[[plugins]]
+repo = 'mattn/vim-lsp-settings'
+
+# 補完エンジン本体
+[[plugins]]
+repo = 'prabirshrestha/asyncomplete.vim'
+
+# 補完エンジンとLSPを繋ぐ
+[[plugins]]
+repo = 'prabirshrestha/asyncomplete-lsp.vim'
 
 
 [[plugins]]
@@ -23,6 +34,7 @@ repo = "cespare/vim-toml"
 
 [[plugins]]
 repo = "psf/black"
+
 
 [[plugins]]
 repo = "sillte/vim-pytoy"
