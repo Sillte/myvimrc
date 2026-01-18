@@ -63,8 +63,9 @@ return {
                     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
                     vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
                     vim.keymap.set({ 'n', 'i' }, '<C-k>', vim.lsp.buf.signature_help, opts)
-                    vim.keymap.set('n', '<A-r>', vim.lsp.buf.rename, opts)
-                    vim.keymap.set("n", "<A-a>", vim.lsp.buf.code_action, opts)
+
+                    vim.keymap.set('n', '<leader>R', vim.lsp.buf.rename, opts)
+                    vim.keymap.set("n", "<leader>A", vim.lsp.buf.code_action, opts)
                     vim.keymap.set("n", "]g", function() vim.diagnostic.jump({ count = 1, float = true }) end, opts)
                     vim.keymap.set("n", "[g", function() vim.diagnostic.jump({ count = -1, float = true }) end, opts)
 

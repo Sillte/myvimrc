@@ -24,14 +24,13 @@ return {
             ['<Tab>']     = { 'accept', 'fallback' },
             ['<S-Tab>']   = { 'select_prev', 'fallback' },
 
-
             -- C-n / C-p での選択（behavior = Insert に相当する動作がデフォルトです）
-            ['<C-n>'] = { 'select_next', 'fallback' },
-            ['<C-p>'] = { 'select_prev', 'fallback' },
+            ['<C-n>']     = { 'select_next', 'fallback' },
+            ['<C-p>']     = { 'select_prev', 'fallback' },
 
             -- ドキュメント（詳細）のスクロール
-            ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
-            ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
+            ['<C-b>']     = { 'scroll_documentation_up', 'fallback' },
+            ['<C-f>']     = { 'scroll_documentation_down', 'fallback' },
         },
 
         -- 補完メニューの見た目 (最新のUI設定)

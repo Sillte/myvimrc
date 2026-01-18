@@ -11,3 +11,18 @@ let g:jedi#popup_select_first = 0
 let g:jedi#show_call_signatures=0
 let g:jedi#documentation_command="<Leader><SPACE>K"
 """
+
+[[plugins]]
+repo = 'vim-python/python-syntax'
+on_ft = 'python'
+
+[[plugins]]
+repo = 'preservim/vim-markdown'
+on_ft = 'markdown'
+
+# Markdown プレビュー
+[[plugins]]
+repo = 'iamcco/markdown-preview.nvim'
+on_ft = 'markdown'
+# Vim起動時ではなく、インストール時または初回呼び出し時にビルド
+build = 'sh -c "cd app && npm install"'
