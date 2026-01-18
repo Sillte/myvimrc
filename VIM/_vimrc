@@ -16,56 +16,7 @@ set signcolumn=yes
 
 set updatetime=2000
 let g:myvim_folder = expand('<sfile>:p:h') . "/.vim"  
-
-" Languate Server Protocol setting.
-"language en_US.UTF-8
-nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
-inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
-vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-
-nnoremap <silent><nowait>K :call CocActionAsync("doHover")<CR>
-nnoremap <C-k> :call CocActionAsync("showSignatureHelp")<CR>
-inoremap <silent><C-k>  <C-r>=CocActionAsync('showSignatureHelp')<CR>
-
-nnoremap <silent>gd :call CocAction("jumpDefinition")<CR>
-nnoremap <silent>gD :call CocAction("jumpDeclaration")<CR>
-nnoremap <silent>gi :call CocAction("jumpImplementation")<CR>
-nnoremap <silent>gy :call CocAction("jumpTypeDefinition")<CR>
-nnoremap <silent>gr :call CocAction("jumpReferences")<CR>
-
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-
-nnoremap <F11> :call CocAction("diagnosticToggle")<CR>
-
-inoremap <silent><expr> <c-x><c-j> coc#refresh()
-inoremap <silent><expr> <c-j> coc#refresh()
-nmap <leader>qf  <Plug>(coc-fix-current)
-
-xmap if <Plug>(coc-funcobj-i)
-omap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap af <Plug>(coc-funcobj-a)
-xmap ic <Plug>(coc-classobj-i)
-omap ic <Plug>(coc-classobj-i)
-xmap ac <Plug>(coc-classobj-a)
-omap ac <Plug>(coc-classobj-a)
-
-" Applying code actions to the selected code block
-" Example: `<leader>aap` for current paragraph
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-
-" Remap keys for applying code actions at the cursor position
-nmap <leader>ac  <Plug>(coc-codeaction-cursor)
-" Remap keys for apply code actions affect whole buffer
-nmap <leader>as  <Plug>(coc-codeaction-source)
-" Apply the most preferred quickfix action to fix diagnostic on the current line
-nmap <leader>qf  <Plug>(coc-fix-current)
-
-command! CocRoot execute "CocCommand workspace.workspaceFolders"
+set winaltkeys=no
 
 
 set laststatus=2
@@ -78,6 +29,8 @@ set hidden
 " encoding setting should  come first.
 set encoding=utf8
 set fileencoding=utf8
+scriptencoding utf-8
+let $PYTHONUTF8 = 1
 set clipboard+=unnamed
 set smartindent
 set backspace=start,eol,indent

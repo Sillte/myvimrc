@@ -2,7 +2,7 @@
 
 # LSP クライアント本体
 [[plugins]]
-repo = 'prabirshrestha/vim-lsp'
+repo = 'sillte/vim-lsp'
 
 # LSP サーバーを自動インストール・設定してくれる神プラグイン
 [[plugins]]
