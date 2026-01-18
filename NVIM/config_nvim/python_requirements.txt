@@ -1,9 +1,14 @@
 ipython
 jedi
 psutil
-pydantic
+pydantic>=2.0.0
 pynvim
 pyte
 pywinpty; sys_platform == "win32"
+pexpect; sys_platform == "linux"
 ruff
 toml
+pip-system-certs
+markitdown
+requests
+pytoy-llm @ git+https://github.com/Sillte/pytoy-llm.git@main

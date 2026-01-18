@@ -24,7 +24,6 @@ if vim.g.vscode then
 else
     --Plugin manager.
     require("lazy_setup")
-    require("mylsp") -- Language Sever.
 end
 
 -- Handling of `_vim` files.
