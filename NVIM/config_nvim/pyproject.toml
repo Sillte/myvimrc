@@ -1,0 +1,36 @@
+[project]
+name = "my-nvim-env"
+version = "0.0.1"
+packages = ["nvim_env"]
+requires-python = ">=3.12"
+dependencies = [
+    "ipython>=8.14",
+    "psutil>=5.9",
+    "pydantic>=2.0.0",
+    "pynvim>=0.5",
+    "pyte>=0.8",
+    "ruff>=0.0.311",
+    "toml>=0.10",
+    "pip-system-certs>=0.1",
+    "markitdown>=0.0.1",
+    "requests>=2.31",
+    "pytoy-llm @ git+https://github.com/Sillte/pytoy-llm.git@main",
+]
+
+[project.optional-dependencies]
+windows = ["pywinpty; sys_platform == 'win32'"]
+linux = ["pexpect; sys_platform == 'linux'"]
+
+# 依存だけ管理、ビルド不要
+[build-system]
+requires = ["hatchling>=1.15"]
+build-backend = "hatchling.build"
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.envs.nvim]
+description = "Neovim plugin Python environment"
+
+[tool.hatch.build.targets.wheel]
+packages = ["nvim_env"]
