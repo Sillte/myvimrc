@@ -14,14 +14,12 @@ dependencies = [
     "pip-system-certs>=0.1",
     "markitdown>=0.0.1",
     "requests>=2.31",
+    "pywinpty; sys_platform == 'win32'",
+    "pexpect; sys_platform == 'linux'",
     "pytoy-llm @ git+https://github.com/Sillte/pytoy-llm.git@main",
 ]
 
-[project.optional-dependencies]
-windows = ["pywinpty; sys_platform == 'win32'"]
-linux = ["pexpect; sys_platform == 'linux'"]
 
-# 依存だけ管理、ビルド不要
 [build-system]
 requires = ["hatchling>=1.15"]
 build-backend = "hatchling.build"
