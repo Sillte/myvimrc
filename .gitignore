@@ -134,3 +134,7 @@ dmypy.json
 .vim/dein
 
 .bak
+
+# temporary
+/tmp
+/temp
