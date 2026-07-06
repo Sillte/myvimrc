@@ -189,3 +189,5 @@ if __name__ == "__main__":
     bin_path = install_directory / "bin"
     if platform.system()  == "Linux":
         ensure_path_in_bashrc(bin_path)
+    else:
+        print(f"Please add `{bin_path}` to the environment.")
