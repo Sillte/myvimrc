@@ -15,7 +15,7 @@ python fetch_config.py
 ## Install config files
 
 ```python 
-python fetch_config.py
+python install_config.py
 ```
 
 
