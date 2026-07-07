@@ -1,47 +1,73 @@
 " File Structures
 " ------------
-" All of the settings and backups are placed under the following folder.
-" * `{Folder under which _vimrc exists}` / `.vim` 
 " [IMPORTANT] When you transport the environment, `.vim` should  also be
-" copied.
+" transported.
 "
-"
-syntax enable
-filetype on
-
-
-set noswapfile
-set number
-set signcolumn=yes
-
-set updatetime=2000
-let g:myvim_folder = expand('<sfile>:p:h') . "/.vim"  
-set winaltkeys=no
-
-
-set laststatus=2
-set shellslash
-set autochdir
-set helplang=en,jp
-set tabstop=8 expandtab shiftwidth=4 softtabstop=4
-set hidden
-" I do not know the reason, but to prevent moji-bake,
-" encoding setting should  come first.
+" ============================================================================
+" Environment
+" ============================================================================
 set encoding=utf8
 set fileencoding=utf8
 scriptencoding utf-8
-let $PYTHONUTF8 = 1
-set clipboard+=unnamed
+let s:myvim_folder = expand('<sfile>:p:h') . "/.vim"  
+
+if exists('$XDG_CACHE_HOME')
+    let s:cache = $XDG_CACHE_HOME . '/vim'
+else
+    let s:cache = expand('~/.cache/vim')
+endif
+
+
+" ============================================================================
+" Utility functions
+" ============================================================================
+
+function! s:SourceIfExists(path) abort
+    if filereadable(a:path)
+        execute 'source' fnameescape(a:path)
+    endif
+endfunction
+
+function! s:AddRuntime(path) abort
+    if isdirectory(a:path)
+        execute 'set runtimepath^=' . fnameescape(a:path)
+    endif
+endfunction    
+
+
+" ============================================================================
+" Options
+" ============================================================================
+
+syntax enable
+
+set number
+set signcolumn=yes
+set laststatus=2
+
+set winaltkeys=no
+
+set shellslash
+set helplang=en,jp
+
+set tabstop=8 expandtab shiftwidth=4 softtabstop=4
 set smartindent
-set backspace=start,eol,indent
+
+set hidden
 set visualbell t_vb=
 set noerrorbells 
+set clipboard+=unnamed
+set backspace=start,eol,indent
+
+" ============================================================================
+" Keymaps
+" ============================================================================
 
 "When you leave insert mode, always `IM` becomes off.
-inoremap <ESC> <ESC>:set iminsert=0<CR>
+inoremap <ESC> <ESC>:set iminsert=0<CR>  
 
-nmap j gj
-nmap k gk
+nnoremap j gj
+nnoremap k gk
 
 inoremap jj <ESC>
 
@@ -54,96 +80,64 @@ nnoremap [l :lnext<CR>
 nnoremap ]l :lprevious<CR>
 nnoremap [w <C-W><C-W>
 nnoremap ]w <C-W><C-P>
-
 noremap <F2> :execute ":edit " . $MYVIMRC <CR>
-noremap <F3> :execute ":edit " . g:myvim_folder <CR>
+noremap <F3> :execute ":edit " . s:myvim_folder <CR>
 
+" ============================================================================
+" Initialization 
+" ============================================================================
 
-" Files related to undo, backups and swap files.
-let &undodir = g:myvim_folder . "/backups/undo"
-if !isdirectory(&undodir)
-    call mkdir(&undodir, "p") 
-endif
-let &backupdir = g:myvim_folder . "/backups/backup"
-if !isdirectory(&backupdir)
-    call mkdir(&backupdir, "p") 
-endif
-let &directory = g:myvim_folder . "/backups/swap"
-if !isdirectory(&directory)
-    call mkdir(&directory,"p") 
-endif
+function! s:InitCache() abort
+    call mkdir(s:cache, 'p')
 
+    set undofile
+    set undolevels=10000
+    set undoreload=100000
 
-"echo &runtimepath
+    let &undodir = s:cache . '/undo'
+    call mkdir(&undodir, 'p')
 
-" Add all the directory under `_plugins` to 
-" Notice of the priorities.
-" In addition to that, `_plugins.vim` is read here, if exists.
-"
-"
-" PC(site) specific settings.
-"
-if filereadable(g:myvim_folder . "/site.vim")
-    execute "source " g:myvim_folder . "/site.vim"
-endif
-
-let s:plugins_folder = g:myvim_folder . "/_plugins"
-for s:path in split(glob(s:plugins_folder . '/*'), '\n')
-  if s:path !~# '\~$' && isdirectory(s:path)
-    let &runtimepath = s:path .  ',' . &runtimepath
-  endif
-endfor
-
-let s:myplugins_vim = s:plugins_folder . '/_plugins.vim'
-if filereadable(s:myplugins_vim)
-    execute 'source '  s:myplugins_vim
-endif
-
-" Experimental settings.
-if filereadable(g:myvim_folder . "/scratch.vim")
-    execute "source " g:myvim_folder . "/scratch.vim"
-endif
-
-
-
-
-function s:inject_pytoy_reboot_debug()
-    if exists('g:pytoy_loaded')
-        return
-    endif
-    let l:home_cache_folder = exists('$XDG_CACHE_HOME') ? $XDG_CACHE_HOME : expand('~/.cache')
-    let l:cache_folder = l:home_cache_folder . "/vim"
-    let l:json_file = l:cache_folder . "/pytoy_reboot.json"
-    let l:session_file = l:cache_folder . "/pytoy_reboot.vim"
-    if filereadable(l:json_file)
-      let l:data = json_decode(join(readfile(l:json_file), "\n"))
-      call delete(l:json_file)
-      if has_key(l:data, 'plugin_folder')
-        execute 'let &runtimepath = "' . escape(l:data.plugin_folder, '"') . '," . &runtimepath'
-        let l:plugin_dir = l:data.plugin_folder. '/plugin'
-        if isdirectory(l:plugin_dir)
-          for file in split(globpath(l:plugin_dir, '*.vim'), '\n')
-            execute 'source' fnameescape(file)
-          endfor
-        endif
-      endif
-      execute 'silent! source' fnameescape(l:session_file)
-    endif
+    set nobackup
+    set nowritebackup
+    set noswapfile
 endfunction
 
-call s:inject_pytoy_reboot_debug()
+" Initialization of cache
+call s:InitCache()
 
-" dein settings.
-execute "source " g:myvim_folder . "/dein.vim"
-"lsp settings.
-execute "source " g:myvim_folder . "/lsp.vim"
+" Site-specific configuration
+call s:SourceIfExists(s:myvim_folder . "/site.vim")
+" Experimental scripts
+call s:SourceIfExists(s:myvim_folder . "/scratch.vim")
 
-let g:jedi#documentation_command="<Leader><SPACE>K"
+" ============================================================================
+" Plugin Setup
+" ============================================================================
 
+" Sandbox plugins.
+let s:myplugins_init = fnameescape(s:myvim_folder . "/_myplugins/init.vim")
+execute "source" s:myplugins_init
+
+
+"Debug script for `pytoy`.
+call s:SourceIfExists(s:myvim_folder . "/pytoy_debug.vim")
+if exists('*OverridePytoyRuntime')
+    call OverridePytoyRuntime(s:cache)
+endif
+
+
+call s:SourceIfExists(s:myvim_folder . "/dein.vim")   
+call s:SourceIfExists(s:myvim_folder . "/lsp.vim")   
+
+
+" ============================================================================
+" Hack
+" ============================================================================
 "I am not able to detect the reason yet,  
 "however, in 2025, Oct, `filetypes` is not loaded... 
 "Therefore, this is the counter-measure.
 if exists("did_load_filetypes") == 0
   runtime! filetype.vim
 endif
+
 filetype plugin indent on

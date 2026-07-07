@@ -1,4 +1,3 @@
-
 function! s:lsp_diagnostic_toggle() abort
     let g:lsp_diagnostics_enabled = !get(g:, 'lsp_diagnostics_enabled', 1)
     let l:state = g:lsp_diagnostics_enabled
