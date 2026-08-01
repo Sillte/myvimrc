@@ -7,10 +7,17 @@ def get_config_path() -> Path:
     ret = subprocess.run(
         ["nvim", "--headless", "-u", "NONE", "+echo stdpath('config')", "+q"],
         stdout=PIPE,
-        stderr=subprocess.STDOUT, 
+        stderr=PIPE, 
         text=True
     )
+    if ret.returncode != 0:
+        raise RuntimeError(
+            "Failed to get neovim config path\n"
+            f"stdout:\n{ret.stdout}\n"
+            f"stderr:\n{ret.stderr}"
+        )
     config_path = Path(ret.stdout.strip())
+    print("config_path", config_path)
     return config_path
 
 
@@ -32,6 +39,10 @@ def copyfiles_with_glob(src_base: Path | str, dst_base: Path | str, target: str 
             continue
         relpath = path.relative_to(src_base)
         dst_path = dst_base / relpath
-        dst_path.parent.mkdir(exist_ok=True, parents=True)
-        print("src", path, "dst", dst_path)
-        shutil.copy2(path, dst_path)
+        try:
+            dst_path.parent.mkdir(exist_ok=True, parents=True)
+        except OSError:
+            continue
+        else:
+            print("src", path, "dst", dst_path)
+            shutil.copy2(path, dst_path)
