@@ -1,22 +1,21 @@
 from pathlib import Path
 import subprocess 
 import shutil
-from subprocess import PIPE
+from subprocess import PIPE, STDOUT
 
 def get_config_path() -> Path:
     ret = subprocess.run(
         ["nvim", "--headless", "-u", "NONE", "+echo stdpath('config')", "+q"],
         stdout=PIPE,
-        stderr=PIPE, 
+        stderr=STDOUT, 
         text=True
     )
     if ret.returncode != 0:
         raise RuntimeError(
             "Failed to get neovim config path\n"
             f"stdout:\n{ret.stdout}\n"
-            f"stderr:\n{ret.stderr}"
         )
-    config_path = Path(ret.stdout.strip())
+    config_path = Path(ret.stdout.strip()).resolve()
     print("config_path", config_path)
     return config_path
 
