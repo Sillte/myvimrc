@@ -16,8 +16,13 @@ dependencies = [
     "requests>=2.31",
     "pywinpty; sys_platform == 'win32'",
     "pexpect; sys_platform == 'linux'",
+    "typing_extensions>=4.13",
     "pytoy-llm @ git+https://github.com/Sillte/pytoy-llm.git@main",
 ]
+
+[tool.uv]
+exclude-newer = "1 week"
+exclude-newer-package = { pytoy-llm = false }
 
 
 [build-system]
