@@ -6,6 +6,7 @@ return {
         formatters_by_ft = {
             lua = { "stylua" },
             python = { "ruff_format", "ruff_organize_imports" },
+            markdown = { "rumdl" },
             typescript = function(bufnr)
                 -- DenoプロジェクトかNode.jsプロジェクトかを判別
                 if vim.fs.root(bufnr, { "deno.json", "deno.jsonc" }) then

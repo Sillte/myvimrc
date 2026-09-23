@@ -4,9 +4,6 @@ vim.keymap.set("i", "jj", "<Esc>")
 vim.keymap.set("", "<F2>", ":edit $MYVIMRC<CR>")
 --vim.keymap.set("i", "<ESC>", "<ESC>:set iminsert=0<CR>", {noremap=true})
 vim.keymap.set("i", "<F3>", "<C-X><C-N>")
-
 vim.keymap.set("i", "<C-x><C-j>", function()
-  require("cmp").complete()
-end, { desc = "Trigger nvim-cmp completion" })
-
-
+	require("blink.cmp").show()
+end, { desc = "Show blink.cmp completion" })
