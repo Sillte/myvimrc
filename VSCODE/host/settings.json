@@ -18,12 +18,16 @@
     "editor.acceptSuggestionOnEnter": "on",
     "editor.suggest.localityBonus": true,
     "editor.parameterHints.enabled": true,
+    "editor.autoIndentOnPaste": true,
+    "editor.inlayHints.enabled": "offUnlessPressed",
     // Editor appearance and editing behavior
     "editor.minimap.enabled": false,
     "editor.autoClosingBrackets": "never",
     "editor.autoClosingQuotes": "never",
+
     // Language services
     "python.analysis.typeCheckingMode": "basic",
+    "python.languageServer": "Default",
     // Copilot
     "github.copilot.enable": {
         "*": true,
@@ -32,6 +36,8 @@
     "github.copilot.chat.agentDebugLog.fileLogging.enabled": true,
 
     // Appearance and Git
+    "workbench.secondarySideBar.defaultVisibility": "hidden",
     "workbench.colorTheme": "Default Dark Modern", 
-    "git.autofetch": true
+    "git.autofetch": true,
+    "chat.viewSessions.orientation": "stacked"
 }

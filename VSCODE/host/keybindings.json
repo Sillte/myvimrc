@@ -106,6 +106,14 @@
     "command": "workbench.action.toggleZenMode",
   },
   {
+    "key": "CTRL+PAGEUP",
+    "command": "workbench.action.zoomIn"
+  },
+  {
+    "key": "CTRL+PAGEDOWN",
+    "command": "workbench.action.zoomOut"
+  },
+  {
     "key": "CTRL+SHIFT+W CTRL+SHIFT+W",
     "command": "workbench.action.focusActiveEditorGroup",
   },

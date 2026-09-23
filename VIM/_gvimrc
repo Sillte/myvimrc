@@ -1,9 +1,23 @@
 colorscheme hybrid
 set langmenu=ja_jp.utf-8
-"colorscheme darkblue
 set background=dark
 set visualbell t_vb=
 set noerrorbells
 set guifont=BIZ_UDゴシック:h14:cSHIFTJIS:qDRAFT
 autocmd GUIEnter * set visualbell t_vb=
 
+function! s:ChangeFontSize(delta) abort
+    let l:font = &guifont
+    let l:size = str2nr(matchstr(l:font, ':h\zs\d\+'))
+
+    if l:size == 0
+        let l:size = 14
+    endif
+
+    let l:size = max([6, l:size + a:delta])
+
+    let &guifont = substitute(l:font, ':h\d\+', ':h' . l:size, '')
+endfunction
+
+nnoremap <C-PageUp> :call <SID>ChangeFontSize(1)<CR>
+nnoremap <C-PageDown> :call <SID>ChangeFontSize(-1)<CR>
