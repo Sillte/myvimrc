@@ -1,6 +1,5 @@
 import os 
 import subprocess 
-from typing import List
 from pathlib import Path
 import tempfile
 import re 
@@ -11,13 +10,15 @@ THIS_FOLDER = Path(__file__).absolute().parent
 EXCLUDES = [ ".gitignore",
              ".vim/site.vim",
              ".vim/scratch.vim",
+             ".vim/vim-plug_site.vim",
              "fetch.py",
              "install.py",
              "utils.py",
              "README.md"]
 
 SITE_SPECIFICS = [".vim/site.vim",
-                  ".vim/scratch.vim"]
+                  ".vim/scratch.vim",
+                  ".vim/vim-plug_site.vim"]
 
 def copy(src, dst, non_exist_ok=True) -> None:
     """ Copy `src` (folder or file) to `dst`.  

@@ -6,8 +6,6 @@ function! s:lsp_diagnostic_toggle() abort
     let g:lsp_diagnostics_enabled = !get(g:, 'lsp_diagnostics_enabled', 1)
     if g:lsp_diagnostics_enabled == 0
         call lsp#disable_diagnostics_for_buffer()
-        " NOTE: (2026/01/17) -> Currently, `let g:lsp_document_code_action_signs_enabled` is off.
-        "execute 'sign unplace * group=vim_lsp_document_code_action_signs buffer=' . bufnr('%')
     else
         call lsp#enable_diagnostics_for_buffer()
     endif
@@ -21,10 +19,8 @@ function! s:format_current_buffer() abort
             silent! execute "%!prettier --stdin-filepath %"
             call winrestview(l:view)
         endif
-    else
-        if exists(':LspDocumentFormat')
-            LspDocumentFormat
-        endif
+    elseif exists(':LspDocumentFormat')
+        LspDocumentFormat
     endif
 endfunction
 
@@ -32,7 +28,11 @@ endfunction
 " Initialization (Buffer/Global)
 "================
 
+let g:lsp_settings_filetype_python = ['pyright-langserver']
+let g:lsp_settings_filetype_markdown = ['marksman']
+
 function! s:InitializeLspBuffer() abort
+    " Diagnostics start hidden and are toggled for the current buffer with <F11>.
     call lsp#disable_diagnostics_for_buffer()
     
     setlocal omnifunc=lsp#complete
@@ -49,16 +49,21 @@ function! s:InitializeLspBuffer() abort
     " Diagnostics
     nmap <buffer><silent> ]g <plug>(lsp-next-diagnostic)
     nmap <buffer><silent> [g <plug>(lsp-previous-diagnostic)
+    nnoremap <buffer><silent> ]e :LspNextError<CR>
+    nnoremap <buffer><silent> [e :LspPreviousError<CR>
+    nnoremap <buffer><silent> <leader>dd :LspDocumentDiagnostics<CR>
     nnoremap <buffer><silent> <F11> :call <SID>lsp_diagnostic_toggle()<CR>
 
 
     " Code Actions
     nmap <buffer><silent> <leader>rn <plug>(lsp-rename)
-    nmap <buffer><silent> <leader>qf <plug>(lsp-code-action)
     nmap <buffer><silent> <leader>ac <plug>(lsp-code-action)
 
     " Hover
     nnoremap <buffer><silent> K :LspHover<CR>
+    nnoremap <buffer><silent> <leader>ds :LspDocumentSymbol<CR>
+    nnoremap <buffer><silent> <leader>ws :LspWorkspaceSymbol<CR>
+    nnoremap <buffer><silent> <leader>st :LspStatus<CR>
 
 
     " Completion
@@ -79,7 +84,7 @@ function! s:InitializeGlobal() abort
     let g:lsp_diagnostics_virtual_text_align = "right"
     let g:lsp_diagnostics_enabled = 1
 
-    " NOTE: (2026/01/17) -> Currently, some hack is required to toggle `A>` sign.
+    " Keep diagnostics available to the per-buffer <F11> toggle.
     let g:lsp_document_code_action_signs_enabled = 0
     set shortmess+=c
 

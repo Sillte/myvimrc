@@ -34,7 +34,6 @@ function! s:AddRuntime(path) abort
     endif
 endfunction    
 
-call s:AddRuntime(s:myvim_folder)
 
 
 " ============================================================================
@@ -119,6 +118,7 @@ call s:SourceIfExists(s:myvim_folder . "/scratch.vim")
 " ============================================================================
 " Plugin Setup
 " ============================================================================
+call s:AddRuntime(s:myvim_folder)
 
 " Sandbox plugins.
 let s:myplugins_init = fnameescape(s:myvim_folder . "/_myplugins/init.vim")

@@ -25,6 +25,11 @@ Configuration for [vim-plug](https://github.com/junegunn/vim-plug).
 Run `:PlugInstall` after the first installation, then use `:PlugUpdate` and
 `:PlugClean` to maintain the plugins.
 
+### `vim-plug_site.vim`
+Optional machine-specific plugin declarations. Add `Plug` lines here when a
+plugin should only be installed on one machine. This file is not overwritten by
+the installer.
+
 ### `site.vim`
 Use to write settings specific to each computers. 
 For example, `pythonthreedll` may be different over each computer,  
