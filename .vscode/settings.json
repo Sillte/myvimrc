@@ -1,0 +1,10 @@
+{
+    "files.exclude": {
+        "**/.DS_Store": true
+    },
+    "search.exclude": {
+        "**/.git": true
+    },
+    "editor.insertSpaces": true,
+    "editor.tabSize": 4
+}

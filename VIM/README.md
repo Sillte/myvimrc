@@ -1,24 +1,29 @@
-## Requirement
+## Requirements
 
-* git (For installment of `dein`)
+* git (For installation of plugins)
 * python3.13+ 
 
-### Quick Tips for installment.
-This `vimrc` assumes to use `python`. 
-Hence,  In `site.vim`
+### Quick Tips for installation
+This `vimrc` assumes that Python is available.
+In `site.vim`, configure the Python DLL if needed:
 
-For example, if you use python 3.11, add `site.vim` as follows.   
+For example, if you use Python 3.13, add `site.vim` as follows.
 ```
 set pythonthreedll=python313.dll
 ```
-At first, it requires long time for installment of plugins. 
+At first, run `:PlugInstall` to install the plugins. This may take some time.
+
+For Python and Markdown LSP support, run `:LspInstallServer` while editing a
+Python or Markdown file. The current configuration selects `pyright-langserver`
+for Python and `marksman` for Markdown.
 
  
 ## Description of folder and files
 
-#### `dein.vim` / `dein` / `dein.toml`
-Configuration for [dein](https://github.com/Shougo/dein.vim).  
-It's related to plugin management.
+#### `vim-plug.vim` / `plugged`
+Configuration for [vim-plug](https://github.com/junegunn/vim-plug).
+Run `:PlugInstall` after the first installation, then use `:PlugUpdate` and
+`:PlugClean` to maintain the plugins.
 
 ### `site.vim`
 Use to write settings specific to each computers. 

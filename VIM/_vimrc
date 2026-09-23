@@ -47,7 +47,11 @@ set laststatus=2
 
 set winaltkeys=no
 
-set shellslash
+if has('win32')
+    set noshellslash
+else
+    set shellslash
+endif
 set helplang=en,jp
 
 set tabstop=8 expandtab shiftwidth=4 softtabstop=4
@@ -126,7 +130,7 @@ if exists('*OverridePytoyRuntime')
 endif
 
 
-call s:SourceIfExists(s:myvim_folder . "/dein.vim")   
+call s:SourceIfExists(s:myvim_folder . "/vim-plug.vim")
 call s:SourceIfExists(s:myvim_folder . "/lsp.vim")   
 
 

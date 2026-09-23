@@ -48,16 +48,16 @@ def copy(src, dst, non_exist_ok=True) -> None:
 
 
 def get_vimrc_parent_path() -> Path:
-    tmpfile = tempfile.NamedTemporaryFile(delete=False)
-    tmpfile.close()
-    subprocess.run([
-        "vim", "-es", "+redir! > " + tmpfile.name,
-        "+silent echo $MYVIMRC",
-        "+redir END", "+qa"
-    ], shell=True)
-    with open(tmpfile.name, encoding="utf-8") as f:
-        path = Path(f.read().strip()).parent
-    os.remove(tmpfile.name)
+    with tempfile.TemporaryDirectory() as tempdir:
+        output_path = Path(tempdir) / "myvimrc-path.txt"
+        subprocess.run([
+            "vim", "-es", "+redir! > " + str(output_path),
+            "+silent echo $MYVIMRC",
+            "+redir END", "+qa"
+        ], check=True, shell=False)
+        with output_path.open(encoding="utf-8") as output:
+            vimrc_path = output.read().strip()
+    path = Path(vimrc_path).parent if vimrc_path else None
     if not path:
         path = os.environ.get("HOME", os.environ.get("USERPROFILE"))
     if path is None:
@@ -65,11 +65,11 @@ def get_vimrc_parent_path() -> Path:
     return Path(path)
 
 
-def get_relative_paths() -> List[Path]:  
+def get_relative_paths() -> list[Path]:
     """Return List of relative paths which are the target of copies. 
     """
 
-    ret = subprocess.run("git ls-files", universal_newlines=True, stdout=subprocess.PIPE, check=True, shell=True)
+    ret = subprocess.run("git ls-files", text=True, stdout=subprocess.PIPE, check=True, shell=True)
     lines = [line for line in ret.stdout.split("\n") if line]
     exclusions = [re.compile(elem) for elem in EXCLUDES] 
 

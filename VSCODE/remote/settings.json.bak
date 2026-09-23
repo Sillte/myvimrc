@@ -1,0 +1,5 @@
+{
+    "vscode-neovim.useWSL": true,
+    "vscode-neovim.neovimExecutablePaths.linux": "/home/zaube/.local/bin/nvim",
+    "workbench.colorTheme": "Monokai"
+}

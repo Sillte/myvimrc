@@ -77,6 +77,7 @@ endfunction
 function! s:InitializeGlobal() abort
     let g:lsp_semantic_enabled = 1
     let g:lsp_diagnostics_virtual_text_align = "right"
+    let g:lsp_diagnostics_enabled = 1
 
     " NOTE: (2026/01/17) -> Currently, some hack is required to toggle `A>` sign.
     let g:lsp_document_code_action_signs_enabled = 0
