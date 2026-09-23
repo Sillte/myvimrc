@@ -1,30 +1,37 @@
 {
+    // vscode-neovim
     "extensions.experimental.affinity": {
         "asvetliakov.vscode-neovim": 1
     },
-    "vscode-neovim.sendKeybindings": true,
     "vscode-neovim.compositeKeys": {
         "jj": {
             "command": "vscode-neovim.escape",
         }
     },
+    // Completion
     "editor.quickSuggestions": {
         "other": "off",
         "comments": "off",
         "strings": "off"
     },
-    "editor.minimap.enabled": false,
-    "editor.autoClosingBrackets": "never",
-    "editor.autoClosingQuotes": "never",
-    "python.analysis.typeCheckingMode": "basic",
     "editor.acceptSuggestionOnCommitCharacter": true,
     "editor.acceptSuggestionOnEnter": "on",
     "editor.suggest.localityBonus": true,
     "editor.parameterHints.enabled": true,
+    // Editor appearance and editing behavior
+    "editor.minimap.enabled": false,
+    "editor.autoClosingBrackets": "never",
+    "editor.autoClosingQuotes": "never",
+    // Language services
+    "python.analysis.typeCheckingMode": "basic",
+    // Copilot
     "github.copilot.enable": {
-        "*": false,
+        "*": true,
     },
     "github.copilot.nextEditSuggestions.enabled": false,
-    "workbench.colorTheme": "Abyss",
+    "github.copilot.chat.agentDebugLog.fileLogging.enabled": true,
+
+    // Appearance and Git
+    "workbench.colorTheme": "Default Dark Modern", 
     "git.autofetch": true
 }

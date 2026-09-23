@@ -42,7 +42,6 @@ function! s:InitializeLspBuffer() abort
     " Navigation
     nmap <buffer><silent> gd <plug>(lsp-definition)
     nmap <buffer><silent> gD <plug>(lsp-declaration)
-    nmap <buffer><silent> gi <plug>(lsp-implementation)
     nmap <buffer><silent> gy <plug>(lsp-type-definition)
     nmap <buffer><silent> gr <plug>(lsp-references)
     nnoremap <buffer><silent> <C-f> :call lsp#scroll(+4)<CR>

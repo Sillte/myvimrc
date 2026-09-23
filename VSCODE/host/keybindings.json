@@ -1,6 +1,11 @@
 // Place your key bindings in this file to override the defaults
 [
-  // Completion:
+  // Completion and inline suggestions
+  {
+    "key": "ctrl+j",
+    "command": "editor.action.triggerSuggest",
+    "when": "editorTextFocus && !suggestWidgetVisible && neovim.mode == 'insert'"
+  },
   {
     "key": "CTRL+N",
     "command": "editor.action.triggerSuggest",
@@ -112,7 +117,7 @@
     "key": "CTRL+SHIFT+W CTRL+SHIFT+L",
     "command": "workbench.action.moveSideBarLeft",
   },
-  // Code action in VSCode Such as explanation of copilot.
+  // Editor actions
   {
     "key": "ALT+A",
     "command": "editor.action.codeAction",
@@ -121,28 +126,28 @@
   {
     "key": "ALT+F",
     "command": "editor.action.formatDocument",
-    "when": "editorHasCodeActionsProvider && editorTextFocus && !editorReadonly"
+    "when": "editorHasDocumentFormattingEditProvider && editorTextFocus && !editorReadonly"
   },
-  // Code review commands: 
+  // Chat editing
   {
     "key": "alt+k",
     "command": "chatEditor.action.navigatePrevious",
-    "when": "chatEdits.hasEditorModifications && chatIsEnabled && editorFocus || chatEdits.hasEditorModifications && chatIsEnabled && notebookCellListFocused"
+    "when": "chatEdits.hasEditorModifications && chatIsEnabled && (editorFocus || notebookCellListFocused)"
   },
   {
     "key": "alt+up",
     "command": "chatEditor.action.navigatePrevious",
-    "when": "chatEdits.hasEditorModifications && chatIsEnabled && editorFocus || chatEdits.hasEditorModifications && chatIsEnabled && notebookCellListFocused"
+    "when": "chatEdits.hasEditorModifications && chatIsEnabled && (editorFocus || notebookCellListFocused)"
   }, 
   {
     "key": "alt+j",
     "command": "chatEditor.action.navigateNext",
-    "when": "chatEdits.hasEditorModifications && chatIsEnabled && editorFocus || chatEdits.hasEditorModifications && chatIsEnabled && notebookCellListFocused"
+    "when": "chatEdits.hasEditorModifications && chatIsEnabled && (editorFocus || notebookCellListFocused)"
   },
   {
     "key": "alt+down",
     "command": "chatEditor.action.navigateNext",
-    "when": "chatEdits.hasEditorModifications && chatIsEnabled && editorFocus || chatEdits.hasEditorModifications && chatIsEnabled && notebookCellListFocused"
+    "when": "chatEdits.hasEditorModifications && chatIsEnabled && (editorFocus || notebookCellListFocused)"
   }, 
   {
     "key": "alt+d",
@@ -197,7 +202,7 @@
 {
   "key": "alt+i",
   "command": "inlineChat.start",
-  "when": "inlineChatHasEditsAgent && inlineChatPossible && !editorReadonly && !editorSimpleInput || inlineChatHasProvider && inlineChatPossible && !editorReadonly && !editorSimpleInput"
+  "when": "inlineChatPossible && !editorReadonly && !editorSimpleInput && (inlineChatHasEditsAgent || inlineChatHasProvider)"
 },
 {
   "key": "alt+y",
@@ -220,7 +225,7 @@
   "when": "inlineChatVisible"
 },
 
-// 
+// Editor and terminal focus
 {
   "key": "ctrl+shift+1",
   "command": "workbench.action.focusFirstEditorGroup"
@@ -228,10 +233,10 @@
 
 {
   "key": "ctrl+shift+2",
-  "command": "workbench.action.terminal.focus",
+  "command": "workbench.action.terminal.focus"
 },
 
-//Terminal related
+// Terminal actions
 {
   "key": "ctrl+shift+w",
   "command": "workbench.action.terminal.kill",
