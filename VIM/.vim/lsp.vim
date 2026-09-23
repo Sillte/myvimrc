@@ -11,6 +11,8 @@ function! s:lsp_diagnostic_toggle() abort
     endif
 endfunction
 
+command! -bar LspDiagnosticToggle call <SID>lsp_diagnostic_toggle()
+
 
 function! s:format_current_buffer() abort
     if &filetype == 'markdown'
@@ -52,7 +54,7 @@ function! s:InitializeLspBuffer() abort
     nnoremap <buffer><silent> ]e :LspNextError<CR>
     nnoremap <buffer><silent> [e :LspPreviousError<CR>
     nnoremap <buffer><silent> <leader>dd :LspDocumentDiagnostics<CR>
-    nnoremap <buffer><silent> <F11> :call <SID>lsp_diagnostic_toggle()<CR>
+    nnoremap <buffer><silent> <F11> :LspDiagnosticToggle<CR>
 
 
     " Code Actions
