@@ -34,6 +34,8 @@ function! s:AddRuntime(path) abort
     endif
 endfunction    
 
+call s:AddRuntime(s:myvim_folder)
+
 
 " ============================================================================
 " Options

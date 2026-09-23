@@ -1,6 +1,8 @@
-let s:plug_home = exists('$XDG_CACHE_HOME')
-      \ ? $XDG_CACHE_HOME . '/vim/plugged'
-      \ : expand('~/.cache/vim/plugged')
+if exists('$XDG_CACHE_HOME')
+      let s:plug_home = $XDG_CACHE_HOME . '/vim/plugged'
+else
+      let s:plug_home = expand('~/.cache/vim/plugged')
+endif
 
 if !filereadable(expand('<sfile>:p:h') . '/autoload/plug.vim')
     finish
