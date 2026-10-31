@@ -113,6 +113,8 @@ call s:InitCache()
 " Site-specific configuration
 call s:SourceIfExists(s:myvim_folder . "/site.vim")
 
+call s:SourceIfExists(s:myvim_folder . "/pre-pytoy-debug.vim")
+
 " Python configuration
 call s:SourceIfExists(s:myvim_folder . "/vim-python-venv.vim")
 
