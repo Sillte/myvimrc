@@ -110,11 +110,13 @@ endfunction
 " Initialization of cache
 call s:InitCache()
 
+" Site-specific configuration
+call s:SourceIfExists(s:myvim_folder . "/site.vim")
+
 " Python configuration
 call s:SourceIfExists(s:myvim_folder . "/vim-python-venv.vim")
 
-" Site-specific configuration
-call s:SourceIfExists(s:myvim_folder . "/site.vim")
+
 " Experimental scripts
 call s:SourceIfExists(s:myvim_folder . "/scratch.vim")
 
