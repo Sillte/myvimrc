@@ -12,7 +12,7 @@ local vim_loop = vim.uv or vim.loop
 -- Match this with Vim's pythonthreedll version when necessary.
 
 
-local default_python_version = vim.env.VIM_PYTHON_VERSION or  "3.13"
+local default_python_version = vim.env.VIM_PYTHON_VERSION or "3.13"
 
 -- =========================================================
 -- uv
@@ -132,16 +132,17 @@ local function venv_to_executable(venv_path)
 end
 
 -- Check whether virtual environment exists
-function M.is_venv_existent()
+function M.is_venv_existent(venv_path)
+    venv_path = venv_path or target_venv_path
     local python_executable =
-        venv_to_executable(target_venv_path)
+        venv_to_executable(venv_path)
 
     return vim.fn.executable(python_executable) == 1
 end
 
 -- Create virtual environment if necessary
 local function ensure_python_venv(venv_path)
-    if M.is_venv_existent() then
+    if M.is_venv_existent(venv_path) then
         return true
     end
 
@@ -161,7 +162,7 @@ local function ensure_python_venv(venv_path)
         return false
     end
 
-    if not M.is_venv_existent() then
+    if not M.is_venv_existent(venv_path) then
         vim.notify(
             "uv venv completed, but Python executable was not found.",
             vim.log.levels.ERROR
@@ -180,28 +181,6 @@ end
 -- =========================================================
 -- Neovim Python provider
 -- =========================================================
-
--- Get Python executable for Neovim provider
-function M.get_python3_host_prog()
-    local python_executable =
-        venv_to_executable(target_venv_path)
-
-    -- Create venv if necessary
-    if not ensure_python_venv(target_venv_path) then
-        return nil
-    end
-
-    -- Install pynvim if necessary
-    if not is_pynvim_installed(python_executable) then
-        if not install_dependency(python_executable) then
-            return nil
-        end
-    end
-
-    return python_executable
-end
-
--- Setup Neovim Python provider
 function M.get_python3_host_prog()
     if not ensure_python_venv(target_venv_path) then
         return nil
