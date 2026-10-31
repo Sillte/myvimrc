@@ -18,10 +18,12 @@ Configuration of below applications
 
 ```bash
 curl -fsSL https://mise.run | sh
-mkdir -p ~/.config/mise && cp .mise.toml ~/.config/mise
-mise install
-```
+echo 'eval "$(~/.local/bin/mise activate bash)"' >> ~/.bashrc
+source ~/.bashrc
 
+mise use -g uv@latest
+mise use -g neovim@latest
+```
 
 From the repository root, install the Git, VIM, NVIM, and VSCode configurations in order:
 

@@ -37,6 +37,7 @@ def get_names() -> list[str]:
 def copy_with_backup(src_path: Path,  dst_path: Path):
     if dst_path.exists():
         shutil.copy(dst_path, dst_path.parent / f"{dst_path.name}.bak")
+    dst_path.mkdir(parentes=True, exist_ok=True)
     shutil.copy(src_path, dst_path)
 
 
