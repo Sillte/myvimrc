@@ -41,7 +41,11 @@ let g:loaded_vim_python_venv = 1
 " ----------------------------------------------------------------------------
 
 if !exists('g:vim_python_venv_version')
-    let g:vim_python_venv_version = '3.13'
+    if exists('$VIM_PYTHON_VERSION') && !empty($VIM_PYTHON_VERSION)
+        let g:vim_python_venv_version = $VIM_PYTHON_VERSION
+    else
+        let g:vim_python_venv_version = '3.13'
+    endif
 endif
 
 
@@ -175,10 +179,6 @@ function! s:get_python_dll(cfg) abort
     let l:dll_name = 'python' . l:version . '.dll'
     let l:dll_path = a:cfg.home . '\' . l:dll_name
 
-    if !filereadable(l:dll_path)
-        throw 'Python DLL not found: ' . l:dll_path
-    endif
-
     return l:dll_path
 endfunction
 
@@ -215,24 +215,34 @@ endfunction
 " ----------------------------------------------------------------------------
 
 function! s:configure_vim_python(venv, cfg, dll) abort
-    if !exists('&pythonthreedll')
-        throw 'pythonthreedll option is unavailable'
-    endif
-
-    if !exists('&pythonthreehome')
-        throw 'pythonthreehome option is unavailable'
-    endif
-
     " Configure Python DLL and base Python home.
-    let &pythonthreedll = a:dll
-    let &pythonthreehome = a:cfg.home
+    if has('win32') || has('win64')
+        if !filereadable(a:dll)
+            throw 'Python DLL not found: ' . a:dll
+        endif
 
+        if !exists('&pythonthreedll')
+            throw 'pythonthreedll option is unavailable'
+        endif
+
+        if !exists('&pythonthreehome')
+            throw 'pythonthreehome option is unavailable'
+        endif
+    let &pythonthreedll = a:dll
+    endif
+
+    "let &pythonthreehome = a:cfg.home
+endfunction
+
+
+function! s:load_venv_dependencies(venv, cfg) abort
     " Determine venv site-packages.
     if has('win32') || has('win64')
         let l:site_packages = a:venv . '\Lib\site-packages'
     else
+        let l:python_version = split(a:cfg.version_info, '\.')[0:1]->join('.')
         let l:site_packages = a:venv . '/lib/python'
-                \ . a:cfg.version_info
+                \ . l:python_version
                 \ . '/site-packages'
     endif
 
@@ -246,7 +256,6 @@ function! s:configure_vim_python(venv, cfg, dll) abort
 
     execute 'py3 import site; site.addsitedir(' . l:python_path . ')'
 endfunction
-
 
 " ----------------------------------------------------------------------------
 " Initialize
@@ -276,6 +285,9 @@ function! s:init() abort
 
         " Configure Vim's embedded Python.
         call s:configure_vim_python(l:venv, l:cfg, l:dll)
+
+        " Resolve dependencies of virtual environment.
+        call s:load_venv_dependencies(l:venv, l:cfg)
 
         " Publish resolved values.
         let g:vim_python_venv = l:venv
