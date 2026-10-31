@@ -69,7 +69,7 @@ set backspace=start,eol,indent
 " ============================================================================
 
 "When you leave insert mode, always `IM` becomes off.
-inoremap <ESC> <ESC>:set iminsert=0<CR>  
+"inoremap <ESC> <ESC>:set iminsert=0<CR>  
 
 nnoremap j gj
 nnoremap k gk
@@ -109,6 +109,9 @@ endfunction
 
 " Initialization of cache
 call s:InitCache()
+
+" Python configuration
+call s:SourceIfExists(s:myvim_folder . "/vim-python-venv.vim")
 
 " Site-specific configuration
 call s:SourceIfExists(s:myvim_folder . "/site.vim")
