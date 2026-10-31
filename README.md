@@ -12,17 +12,19 @@ Configuration of below applications
 * Firstly, you install [uv](https://docs.astral.sh/uv/#installation) in a binary manner.
 * When you install VSCode configuration, you must install NVIM configuration beforehand.
 
+## Environment Variables
+
+* VIM_PYTHON_VENV:
+    *  Location to the virtual environment where `vim` / `neovim` use
+* VIM_PYTHON_VERSION:
+    *  Default version of python used for constrction of virtual environment.
+
 ## Install all configurations
 
 ### Linux
 
-```bash
-curl -fsSL https://mise.run | sh
-echo 'eval "$(~/.local/bin/mise activate bash)"' >> ~/.bashrc
-source ~/.bashrc
-
-mise use -g uv@latest
-mise use -g neovim@latest
+```
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
 From the repository root, install the Git, VIM, NVIM, and VSCode configurations in order:
@@ -38,5 +40,3 @@ uv run install_config_all.py
 * Completion: Consider `editor.suggestSelection: "first"` and `editor.tabCompletion: "on"` to align VS Code with blink.cmp.
 * `<C-PageUp>` / `<C-PageDown>` are used for zoom-in and zoom-out. Do you feel they are comfortable?
     * Rule that `CTRL-` keymap is not used for direct movement of `cursor` may be appropriate.
-
-
