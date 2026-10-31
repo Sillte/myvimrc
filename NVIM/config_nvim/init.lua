@@ -13,6 +13,20 @@ local function setup_python_host()
     vim.g.python3_host_prog = require("python_venv").get_python3_host_prog()
 end
 
+local function pre_pytoy_debug()
+    local cache_dir = vim.fn.stdpath("cache")
+    local json_file = cache_dir .. "/pytoy_reboot.json"
+
+    if vim.fn.filereadable(json_file) == 1 then
+        local content = table.concat(vim.fn.readfile(json_file), "\n")
+        local data = vim.json.decode(content)
+
+        if data and data.debug_venv_path then
+            vim.env.VIM_PYTHON_VENV = data.debug_venv_path
+        end
+    end
+end
+
 local function setup_lazy()
     local lazypath = require("_install_lazy").lazypath
     vim.opt.rtp:prepend(lazypath)
@@ -38,6 +52,7 @@ local function source_legacy_plugins()
     vim.cmd("source " .. vim.fn.fnameescape(plugin_file))
 end
 lua_loader.load_lua_files_from(site_dir .. "/pre")
+pre_pytoy_debug()
 load_core_config()
 setup_python_host()
 setup_lazy()
