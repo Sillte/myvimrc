@@ -14,6 +14,15 @@ Configuration of below applications
 
 ## Install all configurations
 
+### Linux
+
+```bash
+curl -fsSL https://mise.run | sh
+mkdir -p ~/.config/mise && cp .mise.toml ~/.config/mise
+mise install
+```
+
+
 From the repository root, install the Git, VIM, NVIM, and VSCode configurations in order:
 
 ```powershell

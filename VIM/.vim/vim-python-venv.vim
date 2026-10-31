@@ -281,9 +281,6 @@ function! s:init() abort
         let g:vim_python_venv = l:venv
         let g:vim_python_executable = l:python
         let g:vim_python_dll = l:dll
-
-        echom '[vim-python-venv] Ready: ' . l:venv
-
     catch
         echohl ErrorMsg
         echom '[vim-python-venv] ' . v:exception

@@ -1,28 +1,53 @@
 local M = {}
+
 local uv = vim.uv or vim.loop
 
-local config_path = vim.fn.stdpath("config")
-local target_venv_path = config_path .. "/.venv"
-local python_version = "3.12"
+-- Pythonのバージョン。
+-- Vim側のpythonthreedllに合わせる場合は、こちらも同じバージョンにする。
+local default_python_version = "3.13"
 
-local function ensure_python_venv(venv_path)
-    if vim.fn.isdirectory(venv_path) == 0 then
-        local project_dir = vim.fn.fnamemodify(venv_path, ":h")
-        local command = "cd " .. vim.fn.shellescape(project_dir)
-            .. " && uv venv " .. " --python " .. python_version
-        local output = vim.fn.system(command)
-        if vim.v.shell_error == 0 then
-            print("Success of venv-creation.")
-        else
-            print("Failure of venv-creation." .. output)
-        end
+-- Neovimの設定ディレクトリ
+local config_path = vim.fn.stdpath("config")
+
+-- VIM_PYTHON_VENV が指定されていれば優先。
+-- 未指定の場合は、Vim側と同じ共有ディレクトリを既定値にする。
+local function get_default_venv_path()
+    local os_name = uv.os_uname().sysname
+
+    if os_name == "Windows_NT" then
+        local local_app_data = vim.env.LOCALAPPDATA
+            or (vim.env.USERPROFILE .. "/AppData/Local")
+
+        return local_app_data .. "/vim-python-shared/.venv"
     end
-    return venv_path
+
+    local data_home = vim.env.XDG_DATA_HOME
+        or (vim.env.HOME .. "/.local/share")
+
+    return data_home .. "/vim-python-shared/.venv"
 end
 
+local function get_venv_path()
+    local env_path = vim.env.VIM_PYTHON_VENV
 
+    if env_path and env_path ~= "" then
+        return vim.fn.expand(env_path)
+    end
+    vim.env.VIM_PYTHON_VENV = get_default_venv_path()
+    return vim.env.VIM_PYTHON_VENV
+end
+
+local target_venv_path = get_venv_path()
+
+-- uvが利用可能か
+function M.is_uv_available()
+    return vim.fn.executable("uv") == 1
+end
+
+-- 仮想環境のPython実行ファイルのパス
 local function venv_to_executable(venv_path)
     local os_name = uv.os_uname().sysname
+
     if os_name == "Windows_NT" then
         return venv_path .. "/Scripts/python.exe"
     else
@@ -30,40 +55,130 @@ local function venv_to_executable(venv_path)
     end
 end
 
-local function install_dependency(venv_path)
-    local project_dir = vim.fn.fnamemodify(venv_path, ":h")
-    local command = "cd " .. vim.fn.shellescape(project_dir)
-        .. " && uv sync"
-    vim.fn.system(command)
-    if vim.v.shell_error == 0 then
-        print("Success of installment.")
-    else
-        print("Failure of installment.")
-    end
-end
-
-
-function M.is_uv_available()
-    -- Return whether `uv` can be used with `vim.system`.
-    vim.fn.system("uv --help")
-    return vim.v.shell_error == 0
-end
-
+-- 仮想環境が作成済みか
 function M.is_venv_existent()
-    -- Return whether already `venv` is generated.
-    return vim.fn.isdirectory(target_venv_path) == 1
+    local python_executable = venv_to_executable(target_venv_path)
+
+    return vim.fn.executable(python_executable) == 1
 end
 
+-- 仮想環境を作成する
+local function ensure_python_venv(venv_path)
+    if M.is_venv_existent() then
+        return true
+    end
+
+    if not M.is_uv_available() then
+        vim.notify(
+            "uv is not installed or not available in PATH.",
+            vim.log.levels.ERROR
+        )
+        return false
+    end
+
+    local command = {
+        "uv",
+        "venv",
+        "--python",
+        default_python_version,
+        venv_path,
+    }
+
+    local result = vim.system(command, { text = true }):wait()
+
+    if result.code ~= 0 then
+        vim.notify(
+            "Failed to create Python venv:\n" .. (result.stderr or result.stdout or ""),
+            vim.log.levels.ERROR
+        )
+        return false
+    end
+
+    if not M.is_venv_existent() then
+        vim.notify(
+            "uv venv completed, but Python executable was not found.",
+            vim.log.levels.ERROR
+        )
+        return false
+    end
+
+    vim.notify("Python venv created: " .. venv_path, vim.log.levels.INFO)
+    return true
+end
+
+-- venvにNeovimのPython provider用パッケージをインストールする
+local function install_dependency(venv_path)
+    local python_executable = venv_to_executable(venv_path)
+
+    local command = {
+        "uv",
+        "pip",
+        "install",
+        "--python",
+        python_executable,
+        "pynvim",
+    }
+
+    local result = vim.system(command, { text = true }):wait()
+
+    if result.code ~= 0 then
+        vim.notify(
+            "Failed to install pynvim:\n" .. (result.stderr or result.stdout or ""),
+            vim.log.levels.ERROR
+        )
+        return false
+    end
+
+    vim.notify("pynvim installed successfully.", vim.log.levels.INFO)
+    return true
+end
+
+-- NeovimのPython hostとして使う実行ファイルのパスを取得する
 function M.get_python3_host_prog()
-    if M.is_venv_existent() == false then
-        if M.is_uv_available() == false then
-            print("UV is not installed.")
+    if not M.is_uv_available() then
+        vim.notify(
+            "uv is not installed or not available in PATH.",
+            vim.log.levels.ERROR
+        )
+        return nil
+    end
+
+    if not ensure_python_venv(target_venv_path) then
+        return nil
+    end
+
+    -- pynvimが利用可能か確認。
+    -- 未導入の場合のみインストールする。
+    local python_executable = venv_to_executable(target_venv_path)
+
+    local check_command = {
+        python_executable,
+        "-c",
+        "import pynvim",
+    }
+
+    local check_result = vim.system(check_command, { text = true }):wait()
+
+    if check_result.code ~= 0 then
+        if not install_dependency(target_venv_path) then
             return nil
         end
-        ensure_python_venv(target_venv_path)
-        install_dependency(target_venv_path)
     end
-    return venv_to_executable(target_venv_path)
+
+    return python_executable
+end
+
+-- NeovimのPython host設定を行う
+function M.setup()
+    local python_executable = M.get_python3_host_prog()
+
+    if not python_executable then
+        return false
+    end
+
+    vim.g.python3_host_prog = python_executable
+
+    return true
 end
 
 return M
