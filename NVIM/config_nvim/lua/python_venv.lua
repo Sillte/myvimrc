@@ -140,6 +140,36 @@ function M.is_venv_existent(venv_path)
     return vim.fn.executable(python_executable) == 1
 end
 
+-- Install the Neovim Python client when creating a new venv.
+local function install_pynvim(venv_path)
+    local python_executable = venv_to_executable(venv_path)
+    local result = run_uv({
+        "pip",
+        "install",
+        "--python",
+        python_executable,
+        "--exclude-newer",
+        "3 days",
+        "pynvim>=0.5",
+    })
+
+    if result.code ~= 0 then
+        vim.notify(
+            "Failed to install pynvim:\n"
+                .. (result.stderr or result.stdout or ""),
+            vim.log.levels.ERROR
+        )
+        return false
+    end
+
+    vim.notify(
+        "pynvim installed in Python venv: " .. venv_path,
+        vim.log.levels.INFO
+    )
+
+    return true
+end
+
 -- Create virtual environment if necessary
 local function ensure_python_venv(venv_path)
     if M.is_venv_existent(venv_path) then
@@ -175,7 +205,7 @@ local function ensure_python_venv(venv_path)
         vim.log.levels.INFO
     )
 
-    return true
+    return install_pynvim(venv_path)
 end
 
 -- =========================================================

@@ -254,7 +254,15 @@ function! s:load_venv_dependencies(venv, cfg) abort
     " This safely handles Windows paths and quotes.
     let l:python_path = json_encode(l:site_packages)
 
-    execute 'py3 import site; site.addsitedir(' . l:python_path . ')'
+    " Process .pth files, then put the venv ahead of system paths so its
+    " packages take precedence when the same package exists in both.
+    execute 'py3 import site, sys; site.addsitedir('
+                \ . l:python_path
+                \ . '); sys.path[:] = ['
+                \ . l:python_path
+                \ . '] + [entry for entry in sys.path if entry != '
+                \ . l:python_path
+                \ . ']'
 endfunction
 
 " ----------------------------------------------------------------------------
